@@ -1,0 +1,4 @@
+[Project]
+Name=margames
+Manager=KDevCMakeManager
+VersionControl=git

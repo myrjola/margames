@@ -1,5 +1,7 @@
-include_directories(${SDL_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR})
+include_directories(${SDL_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_BINARY_DIR}/gamefunc)
 
 set(margames_SRCS main.c)
 add_executable(margames ${margames_SRCS})
-target_link_libraries(margames ${SDL_LIBRARY})
+target_link_libraries(margames ${SDL_LIBRARY} ${SDLIMAGE_LIBRARY} gamefunc)
+
+add_subdirectory(gamefunc)

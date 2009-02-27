@@ -3,7 +3,7 @@
 
 #include "SDL/SDL.h"
 
-#include "gamefunc/imagefunc.h"
+#include "gamefunc/gfx/imagefunc.h"
 
 
 int main(int argc, char** argv){

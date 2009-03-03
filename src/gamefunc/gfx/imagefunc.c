@@ -9,6 +9,7 @@ SDL_Surface* load_image(const char* filename){
         SDL_FreeSurface(loadedImage);
     return optimizedImage;
     }
+    return NULL;
 }
 
 void draw_surface(int x, int y, SDL_Surface* source, SDL_Surface* target){
@@ -19,4 +20,3 @@ void draw_surface(int x, int y, SDL_Surface* source, SDL_Surface* target){
     /* Blitting time */
     SDL_BlitSurface(source, NULL, target, &temprect);
 }
-    

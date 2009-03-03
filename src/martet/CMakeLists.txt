@@ -9,3 +9,4 @@ target_link_libraries(martet tetphys asciigfx)
 
 add_subdirectory(tetphys)
 add_subdirectory(tetgfx)
+add_subdirectory(tetbase)

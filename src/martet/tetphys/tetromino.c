@@ -35,6 +35,10 @@ const int TETROMINO_T[4][2] = {{0, 0},
                                {1, 0},
                                {0, -1}};
 
+// Colors of the blocks used by the block writing function
+enum colors {RED = 0, GREEN, BLUE, YELLOW, CYAN,
+             ORANGE, MAGENTA, BROWN, GREY, OLIVE};
+
 // tetcreate: creates a tetromino and passes the pointer to it
 struct Tetromino* tetcreate(const int coordinates[4][2]){
     // allocate memory for tetromino
@@ -49,6 +53,12 @@ struct Tetromino* tetcreate(const int coordinates[4][2]){
     tetromino->Block2.y = coordinates[1][1];
     tetromino->Block3.y = coordinates[2][1];
     tetromino->Block4.y = coordinates[3][1];
+    // set the position up and to the middle on the board
+    tetromino->position[0] = 5; // width of board = 10
+    tetromino->position[1] = 0; // 0 is up 20 is down
+    // lazy as I am just choosing random color, looks as pretty anyways.
+    // in int to char conversion you must add '0' to get the right ASCII code
+    tetromino->color = (char) ((rand() % 10) + '0');
     return tetromino;
 }
 

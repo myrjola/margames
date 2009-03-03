@@ -13,6 +13,9 @@ const int TETROMINO_S[4][2];
 const int TETROMINO_Z[4][2];
 const int TETROMINO_T[4][2];
 
+// Colors of tetris blocks used by the block drawing function
+enum colors;
+
 struct Block{
     int x;
     int y;
@@ -23,6 +26,9 @@ struct Tetromino{
     struct Block Block2;
     struct Block Block3;
     struct Block Block4;
+    // the coordinates of Block1 on the board
+    int position[2];
+    char color;
 };
 
 // tetcreate: creates a tetromino and passes the pointer to it

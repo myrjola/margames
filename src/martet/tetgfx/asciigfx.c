@@ -3,12 +3,15 @@
 // blocks2strings: makes the strings for draw_tetromino_ascii's use
 char** blocks2strings(struct Tetromino* tetromino){
     int i;
+    // Color used for the block drawing function
+    char color = (char) tetromino->color;
     // string represents 5 coordinates: range(-2, 2)
     char line1[] = "     "; // y = -2
     char line2[] = "     "; // y = -1 and so on...
-    char line3[] = "  c  "; // Block1 allways 0,0
+    char line3[] = "     ";
     char line4[] = "     ";
     char line5[] = "     ";
+    line3[2] = color; // Block1 allways in the middle
     // then the ascii art practically an array of 5 strings
     //char** lines = (char*) calloc(5, sizeof(char) * 6);
     char** lines = (char**) malloc(sizeof(char*) * 5);
@@ -19,41 +22,41 @@ char** blocks2strings(struct Tetromino* tetromino){
     // just write an 'O' on coordinates of block
     // remember that lineX[2] : x = 0
     switch (tetromino->Block2.y){
-        case (-2): line1[tetromino->Block2.x + 2] = '0';
+        case (-2): line1[tetromino->Block2.x + 2] = color;
         break;
-        case (-1): line2[tetromino->Block2.x + 2] = '0';
+        case (-1): line2[tetromino->Block2.x + 2] = color;
         break;
-        case (0):  line3[tetromino->Block2.x + 2] = '0';
+        case (0):  line3[tetromino->Block2.x + 2] = color;
         break;
-        case (1):  line4[tetromino->Block2.x + 2] = '0';
+        case (1):  line4[tetromino->Block2.x + 2] = color;
         break;
-        case (2):  line5[tetromino->Block2.x + 2] = '0';
+        case (2):  line5[tetromino->Block2.x + 2] = color;
         break;
         default: break;
     }
     switch (tetromino->Block3.y){
-        case (-2): line1[tetromino->Block3.x + 2] = '0';
+        case (-2): line1[tetromino->Block3.x + 2] = color;
         break;
-        case (-1): line2[tetromino->Block3.x + 2] = '0';
+        case (-1): line2[tetromino->Block3.x + 2] = color;
         break;
-        case (0):  line3[tetromino->Block3.x + 2] = '0';
+        case (0):  line3[tetromino->Block3.x + 2] = color;
         break;
-        case (1):  line4[tetromino->Block3.x + 2] = '0';
+        case (1):  line4[tetromino->Block3.x + 2] = color;
         break;
-        case (2):  line5[tetromino->Block3.x + 2] = '0';
+        case (2):  line5[tetromino->Block3.x + 2] = color;
         break;
         default: break;
     }
     switch (tetromino->Block4.y){
-        case (-2): line1[tetromino->Block4.x + 2] = '0';
+        case (-2): line1[tetromino->Block4.x + 2] = color;
         break;
-        case (-1): line2[tetromino->Block4.x + 2] = '0';
+        case (-1): line2[tetromino->Block4.x + 2] = color;
         break;
-        case (0):  line3[tetromino->Block4.x + 2] = '0';
+        case (0):  line3[tetromino->Block4.x + 2] = color;
         break;
-        case (1):  line4[tetromino->Block4.x + 2] = '0';
+        case (1):  line4[tetromino->Block4.x + 2] = color;
         break;
-        case (2):  line5[tetromino->Block4.x + 2] = '0';
+        case (2):  line5[tetromino->Block4.x + 2] = color;
         break;
         default: break;
     }

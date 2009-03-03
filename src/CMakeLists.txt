@@ -4,4 +4,5 @@ set(margames_SRCS main.c)
 add_executable(margames ${margames_SRCS})
 target_link_libraries(margames ${SDL_LIBRARY} ${SDLIMAGE_LIBRARY} gamefunc)
 
-add_subdirectory(gamefunc martet)
+add_subdirectory(gamefunc)
+add_subdirectory(martet)

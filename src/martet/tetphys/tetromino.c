@@ -1,59 +1,98 @@
-#import "tetromino.h"
+#include "tetromino.h"
+
+const int TETROMINO_I[4][2] = {{0, 0},
+                               {0, -1},
+                               {0, 1},
+                               {0, 2}};
+
+const int TETROMINO_J[4][2] = {{0, 0},
+                               {-1, 0},
+                               {0, -1},
+                               {0, -2}};
+
+const int TETROMINO_L[4][2] = {{0, 0},
+                               {0, -1},
+                               {0, -2},
+                               {1, 0}};
+
+const int TETROMINO_O[4][2] = {{0, 0},
+                               {1, 1},
+                               {1, 0},
+                               {0, 1}};
+
+const int TETROMINO_S[4][2] = {{0, 0},
+                               {-1, 0},
+                               {0, -1},
+                               {1, -1}};
+
+const int TETROMINO_Z[4][2] = {{0, 0},
+                               {1, 0},
+                               {0, -1},
+                               {-1, -1}};
+
+const int TETROMINO_T[4][2] = {{0, 0},
+                               {-1, 0},
+                               {1, 0},
+                               {0, -1}};
 
 // tetcreate: creates a tetromino and passes the pointer to it
-struct* tetcreate(const int coordinates[4][2]){
+struct Tetromino* tetcreate(const int coordinates[4][2]){
     // allocate memory for tetromino
-    struct* tetromino;
+    struct Tetromino* tetromino;
     tetromino = (struct Tetromino*) malloc(sizeof(struct Tetromino));
     // create the tetromino
     tetromino->Block1.x = coordinates[0][0];
-    tetromino->Block2.x = coordinates[0][1];
-    tetromino->Block3.x = coordinates[0][2];
-    tetromino->Block4.x = coordinates[0][3];
-    tetromino->Block1.y = coordinates[1][0];
+    tetromino->Block2.x = coordinates[1][0];
+    tetromino->Block3.x = coordinates[2][0];
+    tetromino->Block4.x = coordinates[3][0];
+    tetromino->Block1.y = coordinates[0][1];
     tetromino->Block2.y = coordinates[1][1];
-    tetromino->Block3.y = coordinates[1][2];
-    tetromino->Block4.y = coordinates[1][3];
-    // init direction
-    tetromino->direction = 0;
+    tetromino->Block3.y = coordinates[2][1];
+    tetromino->Block4.y = coordinates[3][1];
+    return tetromino;
 }
 
 // tetrotate: rotates the tetromino 90 degrees clockwise
 void tetrotate(struct Tetromino* tetromino){
-    // get rotation angle and change direction
-    double angle = rotationangle(tetromino->direction)
-    // Block1 as pivot point
-    pointrotate(tetromino->Block2, angle);
-    pointrotate(tetromino->Block3, angle);
-    pointrotate(tetromino->Block4, angle);
+    // Block1 allways as pivot point
+    pointrotate(&(tetromino->Block2));
+    pointrotate(&(tetromino->Block3));
+    pointrotate(&(tetromino->Block4));
     return;
-}
-
-
-// rotationangle: changes Tetromino.direction and
-//                returns the angle in radians
-double rotationangle(int* direction){
-    (*direction)++;
-    if (direction == 4)
-        *direction = 0;
-    return (*direction * 3.14 / 2);
 }
 
 // pointrotate: rotates point in 90 degrees clockwise
 //              relative to origo. Used for tetromino
 //              blocks.
-void pointrotate(struct Block* block, double angle){
+void pointrotate(struct Block* block){
     // cast the coordinates to doubles
     // needed by the math functions
     double x = (double) block->x;
     double y = (double) block->y;
     // distance to origo
     double distance = sqrt((x*x + y*y));
+    // calculate the initial direction in radians
+    double angle;
+    // x != 0 ? angle = acos(x / distance) : asin(y / distance);
+    if (x != 0){
+        angle = acos(x / distance);
+        // angle range 0 , 180 if y not checked
+        if (y < 0)
+            angle = -angle;
+    }
+    else
+        angle = asin(y / distance);
+
+    // rotate 90 degrees clockwise
+    // angle = (angle < 0) ? angle - 1.57 : angle + 1.57;
+    // angle = (angle < 0) ? -angle + 3.14 : angle;
+    angle += 1.57;
+
     // rotation using trigonometry
     x = distance * cos(angle);
     y = distance * sin(angle);
-    // casting the doubles back to int,
-    // automatic approximation should occur
-    block->x = (int) x;
-    block->y = (int) y;
+    // approximate the doubles to integers
+    block->x = (int) (x >= 0) ? (x + 0.5) : (x - 0.5);
+    block->y = (int) (y >= 0) ? (y + 0.5) : (y - 0.5);
+    return;
 }

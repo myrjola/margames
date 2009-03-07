@@ -11,4 +11,5 @@ void tetaction(char input, struct Tetromino* tetromino){
 }
 
 void tetmove(char direction, struct Tetromino* tetromino){
+    // if all blocks can move move tetromino, using recursion.
     if (blockmove(direction, &(tetromino->Block1)))

@@ -22,7 +22,7 @@ int blockmove(char, struct Block*);
 // tetfall: let the tetrominoe fall down until collision detected
 void tetfall(struct Tetromino*);
 
-// block_collision_test: collision testing with block returns 0 if no collision
-int block_collision_test(struct Block*, struct Block*);
+// if_no_collision(board, x, y): if no block at coordinate return true
+bool if_no_collision(char**, int, int);
 
 #endif // TETPHYS_H

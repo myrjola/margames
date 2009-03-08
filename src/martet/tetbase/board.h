@@ -1,6 +1,7 @@
 // the board where the gameplay happens and the functions needed to manipulate
 // it. Declared the board variable static so that functions outside board.c
 // can't directly mess with it.
+#include <stdlib.h>
 
 #ifndef BOARD_H
 #define BOARD_H
@@ -14,17 +15,23 @@ static char** board = NULL;
 // board_create: creates the board represented as char array[20][10 + 1]
 // space is empty other chars represent colors
 
-char** board_create(void);
+void board_create(void);
 
-// convert_coordinate: convert blocks coordinate to the corresponding coordinate on screen.
+// convert_coordinate: convert blocks coordinate to the corresponding coordinate
+//                     on screen.
 int convert_coordinate(int);
 
-// check_lines: calls delete_lines if full line/-s of blocks found
+// check_rows: calls delete_rows if full row/-s of blocks found returns no.
+//              of rows deleted
+int check_rows(void);
 
-// delete_lines: deletes line or lines of blocks and calls drop_lines.
+// delete_rows: deletes row or rows of blocks and calls drop_rows.
+void delete_rows(int*);
 
-// drop_lines: drops lines above chosen line n steps down
+// drop_rows: drops rows above chosen row n steps down
+void drop_rows(int, int);
 
-// get_board_pos:
+// get_board_pos: returns char on board coordinates
+char get_board_pos(int, int);
 
 #endif // BOARD_H

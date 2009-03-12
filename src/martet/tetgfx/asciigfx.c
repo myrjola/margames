@@ -22,42 +22,27 @@ char** blocks2strings(struct Tetromino* tetromino){
     // just write an 'O' on coordinates of block
     // remember that lineX[2] : x = 0
     switch (tetromino->Block2.y){
-        case (-2): line1[tetromino->Block2.x + 2] = color;
-        break;
-        case (-1): line2[tetromino->Block2.x + 2] = color;
-        break;
-        case (0):  line3[tetromino->Block2.x + 2] = color;
-        break;
-        case (1):  line4[tetromino->Block2.x + 2] = color;
-        break;
-        case (2):  line5[tetromino->Block2.x + 2] = color;
-        break;
+        case (-2): line1[tetromino->Block2.x + 2] = color; break;
+        case (-1): line2[tetromino->Block2.x + 2] = color; break;
+        case (0):  line3[tetromino->Block2.x + 2] = color: break;
+        case (1):  line4[tetromino->Block2.x + 2] = color; break;
+        case (2):  line5[tetromino->Block2.x + 2] = color; break;
         default: break;
     }
     switch (tetromino->Block3.y){
-        case (-2): line1[tetromino->Block3.x + 2] = color;
-        break;
-        case (-1): line2[tetromino->Block3.x + 2] = color;
-        break;
-        case (0):  line3[tetromino->Block3.x + 2] = color;
-        break;
-        case (1):  line4[tetromino->Block3.x + 2] = color;
-        break;
-        case (2):  line5[tetromino->Block3.x + 2] = color;
-        break;
+        case (-2): line1[tetromino->Block3.x + 2] = color; break;
+        case (-1): line2[tetromino->Block3.x + 2] = color; break;
+        case (0):  line3[tetromino->Block3.x + 2] = color; break;
+        case (1):  line4[tetromino->Block3.x + 2] = color; break;
+        case (2):  line5[tetromino->Block3.x + 2] = color; break;
         default: break;
     }
     switch (tetromino->Block4.y){
-        case (-2): line1[tetromino->Block4.x + 2] = color;
-        break;
-        case (-1): line2[tetromino->Block4.x + 2] = color;
-        break;
-        case (0):  line3[tetromino->Block4.x + 2] = color;
-        break;
-        case (1):  line4[tetromino->Block4.x + 2] = color;
-        break;
-        case (2):  line5[tetromino->Block4.x + 2] = color;
-        break;
+        case (-2): line1[tetromino->Block4.x + 2] = color; break;
+        case (-1): line2[tetromino->Block4.x + 2] = color; break;
+        case (0):  line3[tetromino->Block4.x + 2] = color; break;
+        case (1):  line4[tetromino->Block4.x + 2] = color; break;
+        case (2):  line5[tetromino->Block4.x + 2] = color; break;
         default: break;
     }
 
@@ -78,5 +63,6 @@ void draw_tetromino_ascii(struct Tetromino* tetromino){
         printf(*(lines + i++));
         printf("\n");
     }
+    free(lines);
     return;
 }

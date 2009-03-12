@@ -19,6 +19,7 @@ enum colors;
 struct Block{
     int x;
     int y;
+    int block_number; // tetromino has 4 blocks
 };
 
 struct Tetromino{

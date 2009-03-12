@@ -1,3 +1,4 @@
+#include <stdbool.h>
 #include "tetromino.h"
 
 #ifndef TETPHYS_H
@@ -13,13 +14,13 @@ void tetaction(char, struct Tetromino*);
 
 // tetmove: move tetrominoe left for 'l', right for 'r'
 //          and down for 'd' return 1 if succesful else 0
-int tetmove(char, struct Tetromino*);
+void tetmove(char, struct Tetromino*);
 
-// blockmove: move block left for 'l', right for 'r'
+// blockmove: move block in tetromino left for 'l', right for 'r'
 //            and down for 'd' return 1 if succesful else 0
-int blockmove(char, struct Block*);
+int blockmove(char, struct Tetromino*, int);
 
-// tetfall: let the tetrominoe fall down until collision detected
+// tetfall: let the tetromino fall down until collision detected
 void tetfall(struct Tetromino*);
 
 // if_no_collision(board, x, y): if no block at coordinate return true

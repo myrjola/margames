@@ -53,6 +53,11 @@ struct Tetromino* tetcreate(const int coordinates[4][2]){
     tetromino->Block2.y = coordinates[1][1];
     tetromino->Block3.y = coordinates[2][1];
     tetromino->Block4.y = coordinates[3][1];
+    tetromino->Block1.block_number = 1;
+    tetromino->Block2.block_number = 2;
+    tetromino->Block3.block_number = 3;
+    tetromino->Block4.block_number = 4;
+
     // set the position up and to the middle on the board
     tetromino->position[0] = 5; // width of board = 10
     tetromino->position[1] = 0; // 0 is up 20 is down

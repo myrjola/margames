@@ -1,7 +1,9 @@
 #include "tetphys/tetromino.h"
+#include "tetphys/tetphys.h"
 #include "tetgfx/asciigfx.h"
-#include "tetgfx/tilegfx.h"
+#include "tetgfx/fillrectgfx.h"
 #include "tetbase/board.h"
+#include "../gamefunc/input/keyeventinput.h"
 
 int main(int argc, char** argv){
     struct Tetromino* active_tetromino;
@@ -12,8 +14,15 @@ int main(int argc, char** argv){
         return 1;
     }
     screen    = SDL_SetVideoMode(640, 480, 32, SDL_SWSURFACE);
+    boardsurf = SDL_SetVideoMode(640, 480, 32, SDL_SWSURFACE);
     board_create();
-    boardsurf = 
-    
+    int score   = 0;
+    int running = 1;
+    while (running){
+        process_key_events(active_tetromino, tetaction);
+        clear_board(boardsurf);
+        draw_board(boardsurf);
+        score += check_rows();
+    }
     return 0;
 }

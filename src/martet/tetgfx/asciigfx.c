@@ -24,7 +24,7 @@ char** blocks2strings(struct Tetromino* tetromino){
     switch (tetromino->Block2.y){
         case (-2): line1[tetromino->Block2.x + 2] = color; break;
         case (-1): line2[tetromino->Block2.x + 2] = color; break;
-        case (0):  line3[tetromino->Block2.x + 2] = color: break;
+        case (0):  line3[tetromino->Block2.x + 2] = color; break;
         case (1):  line4[tetromino->Block2.x + 2] = color; break;
         case (2):  line5[tetromino->Block2.x + 2] = color; break;
         default: break;

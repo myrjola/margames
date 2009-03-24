@@ -3,7 +3,7 @@ include_directories(${SDL_INCLUDES}
 
 set(martet_SRCS main.c)
 add_executable(martet ${margames_SRCS})
-target_link_libraries(martet tetphys asciigfx tetbase)
+target_link_libraries(martet ${SDL_LIBRARY} tetphys asciigfx tetbase keyeventinput)
 
 add_subdirectory(tetphys)
 add_subdirectory(tetgfx)

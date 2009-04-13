@@ -11,10 +11,13 @@ void tetaction(char input, struct Tetromino* tetromino){
     }
 }
 
-void tetmove(char direction, struct Tetromino* tetromino){
-    // if all blocks can move move tetromino, using recursion just for
+int tetmove(char direction, struct Tetromino* tetromino){
+    // if all blocks can move, move tetromino. Using recursion just for
     // practice
-    blockmove(direction, tetromino, 1);
+    if (blockmove(direction, tetromino, 1)) // if tetromino could move
+        return 1;
+    else
+        return 0;
 }
 
 // blockmove: move block left for 'l', right for 'r'
@@ -32,6 +35,7 @@ int blockmove(char direction, struct Tetromino* tetromino, int block_number){
     int new_y = block->y;
     // calculate the new position
     switch (direction){
+        
         case (UP):      new_y--; break;
         case (DOWN):    new_y++; break;
         case (LEFT):    new_x--; break;
@@ -50,7 +54,7 @@ int blockmove(char direction, struct Tetromino* tetromino, int block_number){
     }
     else { // if not last block
         if (blockmove(direction, tetromino, block_number + 1)){ // test if move possible with next block
-            if (get_board_pos(new_x, new_y) == ' '){ // if position free
+            if (get_board_pos(new_x, new_y) == ' '){     // if position free
                 block->x = new_x;                        // move block and return success
                 block->y = new_y;
                 return 1;
@@ -60,4 +64,10 @@ int blockmove(char direction, struct Tetromino* tetromino, int block_number){
             return 0; // else return failure
         }
     }
+}
+
+void tetfall(struct Tetromino* tetromino){
+    while (tetmove('d', tetromino)) // drop the tetromino until collision
+        ;
+    return;
 }

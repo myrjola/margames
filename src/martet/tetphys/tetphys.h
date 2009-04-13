@@ -14,7 +14,7 @@ void tetaction(char, struct Tetromino*);
 
 // tetmove: move tetrominoe left for 'l', right for 'r'
 //          and down for 'd' return 1 if succesful else 0
-void tetmove(char, struct Tetromino*);
+int tetmove(char, struct Tetromino*);
 
 // blockmove: move block in tetromino left for 'l', right for 'r'
 //            and down for 'd' return 1 if succesful else 0

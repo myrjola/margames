@@ -103,7 +103,10 @@ char get_board_pos(int x, int y){
 
 // get_board_line: returns string of chosen row
 char* get_board_line(int y){
-    return board[y];
+    if (y >= 0 && y <= BOARD_HEIGHT -1)
+        return board[y];
+    else
+        return NULL;
 }
 
 

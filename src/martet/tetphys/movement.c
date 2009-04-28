@@ -1,3 +1,5 @@
+
+#include <stdio.h>
 #include "tetphys.h"
 #include "../tetbase/board.h"
 
@@ -35,7 +37,6 @@ int blockmove(char direction, struct Tetromino* tetromino, int block_number){
     int new_y = block->y;
     // calculate the new position
     switch (direction){
-        
         case (UP):      new_y--; break;
         case (DOWN):    new_y++; break;
         case (LEFT):    new_x--; break;
@@ -61,6 +62,7 @@ int blockmove(char direction, struct Tetromino* tetromino, int block_number){
             }
         }
         else {
+            printf("couldn't move\n");
             return 0; // else return failure
         }
     }

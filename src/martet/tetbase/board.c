@@ -100,12 +100,15 @@ void drop_rows(int startrow, int numrows){
 // get_board_pos: returns char on board coordinates, used for collision
 //                detection
 char get_board_pos(int x, int y){
+    if ((x < 0 ) || (x > BOARD_WIDTH) || (y < 0 ) || (y > BOARD_HEIGHT)){
+        return 'X';
+    }
     return board[x][y];
 }
 
 // get_board_line: returns string of chosen row
 char* get_board_line(int y){
-    if (y >= 0 && y <= BOARD_HEIGHT -1)
+    if (y >= 0 && y <= BOARD_HEIGHT - 1)
         return board[y];
     else
         return NULL;

@@ -12,8 +12,6 @@ enum {BLOCK_SIZE = 32,
       BOARD_HEIGHT = 20,
       BOARD_WIDTH = 10};
 
-static char** board = NULL;
-
 // board_create: creates the board represented as char array[20][10 + 1]
 // space is empty other chars represent colors
 

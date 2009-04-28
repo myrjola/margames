@@ -1,6 +1,8 @@
 // the board where the gameplay happens and some related functions.
 #include "board.h"
 
+static char** board = NULL;
+
 // board_create: creates the board represented as char array[20][10]
 // space is empty other chars represent colors
 void board_create(void){

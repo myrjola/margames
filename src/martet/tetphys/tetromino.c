@@ -60,7 +60,7 @@ struct Tetromino* tetcreate(const int coordinates[4][2]){
 
     // set the position up and to the middle on the board
     tetromino->position[0] = 5; // width of board = 10
-    tetromino->position[1] = 0; // 0 is up 20 is down
+    tetromino->position[1] = 2; // 0 is up 20 is down
     // lazy as I am just choosing random color, looks as pretty anyways.
     // in int to char conversion you must add '0' to get the right ASCII code
     tetromino->color = (char) ((rand() % 10) + '0');

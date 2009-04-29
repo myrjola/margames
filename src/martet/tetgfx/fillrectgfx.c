@@ -30,9 +30,11 @@ void draw_board(SDL_Surface* boardsurf){
     SDL_Rect blitrect;
     blitrect.w = 32;
     blitrect.h = 32;
-    while (currentrow = get_board_line(y++)){ // iterate through the rows
+    while (y < BOARD_HEIGHT){
+        currentrow = get_board_line(y++);
         while (blockpos = currentrow[x++]){
             if (blockpos != ' '){ // if blockpos not empty
+                printf("x:%d y:%d = '%c'\n", x-1, y-1, blockpos);
                 blitrect.x = convert_coordinate(x);
                 blitrect.y = convert_coordinate(y);
                 SDL_FillRect(boardsurf, &blitrect, SDL_MapRGB(boardsurf->format, 255, 0, 0));

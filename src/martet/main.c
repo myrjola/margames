@@ -14,7 +14,7 @@ int main(int argc, char** argv){
         printf("Error: SDL didn't initialize\n");
         return 1;
     }
-    screen    = SDL_SetVideoMode(320, 640, 32, SDL_SWSURFACE);
+    screen = SDL_SetVideoMode(320, 640, 32, SDL_SWSURFACE);
     board_create();
     active_tetromino = tetcreate(TETROMINO_S);
     int score   = 0;

@@ -16,8 +16,16 @@ void tetaction(char input, struct Tetromino* tetromino){
 int tetmove(char direction, struct Tetromino* tetromino){
     // if all blocks can move, move tetromino. Using recursion just for
     // practice
-    if (blockmove(direction, tetromino, 1)) // if tetromino could move
-        return 1;
+    if (blockmove(direction, tetromino, 1)){ // if tetromino could move
+        switch (direction){
+            case (UP):      tetromino->position[1]--; break;
+            case (DOWN):    tetromino->position[1]++; break;
+            case (LEFT):    tetromino->position[0]--; break;
+            case (RIGHT):   tetromino->position[0]++; break;
+            default: break;
+        }
+         return 1;
+    }
     else
         return 0;
 }
@@ -33,8 +41,8 @@ int blockmove(char direction, struct Tetromino* tetromino, int block_number){
         case (4): block = &tetromino->Block4; break;
         default: break;
     }
-    int new_x = block->x;
-    int new_y = block->y;
+    int new_x = block->x + tetromino->position[0];
+    int new_y = block->y + tetromino->position[1];
     // calculate the new position
     switch (direction){
         case (UP):      new_y--; break;
@@ -45,8 +53,6 @@ int blockmove(char direction, struct Tetromino* tetromino, int block_number){
     }
     if (block->block_number == 4){               // if last block
         if (get_board_pos(new_x, new_y) == ' '){ // if position free
-            block->x = new_x;                        // move block and return success
-            block->y = new_y;
             return 1;
         }
         else {
@@ -56,8 +62,6 @@ int blockmove(char direction, struct Tetromino* tetromino, int block_number){
     else { // if not last block
         if (blockmove(direction, tetromino, block_number + 1)){ // test if move possible with next block
             if (get_board_pos(new_x, new_y) == ' '){     // if position free
-                block->x = new_x;                        // move block and return success
-                block->y = new_y;
                 return 1;
             }
         }

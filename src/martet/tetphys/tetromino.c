@@ -88,7 +88,6 @@ void pointrotate(struct Block* block){
     double distance = sqrt((x*x + y*y));
     // calculate the initial direction in radians
     double angle;
-    // x != 0 ? angle = acos(x / distance) : asin(y / distance);
     if (x != 0){
         angle = acos(x / distance);
         // angle range 0 , 180 if y not checked
@@ -98,9 +97,6 @@ void pointrotate(struct Block* block){
     else
         angle = asin(y / distance);
 
-    // rotate 90 degrees clockwise
-    // angle = (angle < 0) ? angle - 1.57 : angle + 1.57;
-    // angle = (angle < 0) ? -angle + 3.14 : angle;
     angle += 1.57;
 
     // rotation using trigonometry

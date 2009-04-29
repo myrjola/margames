@@ -10,7 +10,7 @@ void board_create(void){
     // allocate memory for board rows
     board = (char**) malloc(sizeof(char*) * BOARD_HEIGHT);
     i = 0;
-    while (i < BOARD_HEIGHT){
+    while (i <= BOARD_HEIGHT){
         // allocate memory for board columns
         *(board + i) = (char*) malloc(sizeof(char) * BOARD_WIDTH + 1); // one extra for '\0'
         // fill row with whitespace to init it to empty
@@ -44,7 +44,7 @@ int check_rows(void){
         }
     }
 }
-            
+
 bool row_full(char* row){
     int x = 0; // x coordinate
     while (row[x++] != ' '){ // while block found on column
@@ -100,10 +100,10 @@ void drop_rows(int startrow, int numrows){
 // get_board_pos: returns char on board coordinates, used for collision
 //                detection
 char get_board_pos(int x, int y){
-    if ((x < 0 ) || (x > BOARD_WIDTH) || (y < 0 ) || (y > BOARD_HEIGHT)){
-        return 'X';
-    }
-    return board[x][y];
+     if ((x < 0 ) || (x >= BOARD_WIDTH) || (y < 0 ) || (y >= BOARD_HEIGHT )){
+         return 'X';
+     }
+    return board[y][x];
 }
 
 // get_board_line: returns string of chosen row

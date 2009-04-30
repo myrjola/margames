@@ -1,3 +1,4 @@
+
 // the board where the gameplay happens and some related functions.
 #include "board.h"
 
@@ -14,7 +15,7 @@ void board_create(void){
         // allocate memory for board columns
         *(board + i) = (char*) malloc(sizeof(char) * BOARD_WIDTH + 1); // one extra for '\0'
         // fill row with whitespace to init it to empty
-        *(board + i++) = "    xx    ";
+        *(board + i++) = "          ";
     }
 }
 

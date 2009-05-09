@@ -1,3 +1,3 @@
 add_subdirectory(gfx)
 add_subdirectory(input)
-#add_subdirectory(misc)
+add_subdirectory(misc)

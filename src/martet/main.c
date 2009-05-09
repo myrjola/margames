@@ -6,6 +6,7 @@
 #include "tetbase/board.h"
 #include "../gamefunc/input/keyeventinput.h"
 #include "../gamefunc/gfx/imagefunc.h"
+#include "../gamefunc/misc/timer.h"
 
 int main(int argc, char** argv){
     struct Tetromino* active_tetromino;
@@ -18,10 +19,15 @@ int main(int argc, char** argv){
     board_create();
     active_tetromino = tetcreate(TETROMINO_S);
     int score   = 0;
+    struct Timer* timer = timer_create();
+    timer_change_alarm_interval(timer, 500);
+    timer_start(timer);
     int running = 1;
     while (running){
         if (process_key_events(active_tetromino, tetaction)) // if 1 player tries to quit
             running = 0;
+        if (timer_update(timer))
+            tetmove('d', active_tetromino);
         clear_board(screen);
         draw_tetromino(screen, active_tetromino);
         draw_board(screen);

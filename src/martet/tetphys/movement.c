@@ -14,36 +14,8 @@ void tetaction(char input, struct Tetromino* tetromino){
 }
 
 int tetmove(char direction, struct Tetromino* tetromino){
-    // if all blocks can move, move tetromino. Using recursion just for
-    // practice
-    if (blockmove(direction, tetromino, 1)){ // if tetromino could move
-        switch (direction){
-            case (UP):      tetromino->position[1]--; break;
-            case (DOWN):    tetromino->position[1]++; break;
-            case (LEFT):    tetromino->position[0]--; break;
-            case (RIGHT):   tetromino->position[0]++; break;
-            default: break;
-        }
-         return 1;
-    }
-    else
-        return 0;
-}
-
-// blockmove: move block left for 'l', right for 'r'
-//            and down for 'd' return 1 if succesful else 0
-int blockmove(char direction, struct Tetromino* tetromino, int block_number){
-    struct Block* block;
-    switch (block_number){
-        case (1): block = &tetromino->Block1; break;
-        case (2): block = &tetromino->Block2; break;
-        case (3): block = &tetromino->Block3; break;
-        case (4): block = &tetromino->Block4; break;
-        default: break;
-    }
-    int new_x = block->x + tetromino->position[0];
-    int new_y = block->y + tetromino->position[1];
-    // calculate the new position
+    int new_x = tetromino->position[0];
+    int new_y = tetromino->position[1];
     switch (direction){
         case (UP):      new_y--; break;
         case (DOWN):    new_y++; break;
@@ -51,25 +23,24 @@ int blockmove(char direction, struct Tetromino* tetromino, int block_number){
         case (RIGHT):   new_x++; break;
         default: break;
     }
-    if (block->block_number == 4){               // if last block
-        if (get_board_pos(new_x, new_y) == ' '){ // if position free
-            return 1;
-        }
-        else {
-            return 0; // else return failure
-        }
-    }
-    else { // if not last block
-        if (blockmove(direction, tetromino, block_number + 1)){ // test if move possible with next block
-            if (get_board_pos(new_x, new_y) == ' '){     // if position free
-                return 1;
-            }
-        }
-        else {
-            printf("couldn't move\n");
-            return 0; // else return failure
-        }
-    }
+    // if all blocks can move, move tetromino
+    if ( can_block_move(&tetromino->Block1, new_x, new_y))
+        if ( can_block_move(&tetromino->Block2, new_x, new_y))
+            if ( can_block_move(&tetromino->Block3, new_x, new_y))
+                if ( can_block_move(&tetromino->Block4, new_x, new_y)){
+                    tetromino->position[0] = new_x;
+                    tetromino->position[1] = new_y;
+                    return 1;
+                }
+    return 0;
+}
+
+can_block_move(struct Block* block, int x, int y){
+    int new_x = block->x + x;
+    int new_y = block->y + y;
+    if ( get_board_pos(new_x, new_y) == ' ')
+        return 1;
+    return 0;
 }
 
 void tetfall(struct Tetromino* tetromino){

@@ -12,13 +12,11 @@ enum {UP    = 'u',
 // tetaction: actions for tetrominoes based on input.
 void tetaction(char, struct Tetromino*);
 
-// tetmove: move tetrominoe left for 'l', right for 'r'
+// tetmove: move tetromino left for 'l', right for 'r'
 //          and down for 'd' return 1 if succesful else 0
 int tetmove(char, struct Tetromino*);
 
-// blockmove: move block in tetromino left for 'l', right for 'r'
-//            and down for 'd' return 1 if succesful else 0
-int blockmove(char, struct Tetromino*, int);
+int can_block_move(struct Block*, int, int);
 
 // tetfall: let the tetromino fall down until collision detected
 void tetfall(struct Tetromino*);

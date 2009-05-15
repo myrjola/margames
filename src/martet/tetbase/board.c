@@ -13,9 +13,9 @@ void board_create(void){
     i = 0;
     while (i <= BOARD_HEIGHT){
         // allocate memory for board columns
-        *(board + i) = (char*) malloc(sizeof(char) * BOARD_WIDTH + 1); // one extra for '\0'
+        *(board + i) = (char*) malloc(sizeof(char) * (BOARD_WIDTH + 1)); // one extra for '\0'
         // fill row with whitespace to init it to empty
-        *(board + i++) = "          ";
+        board[i++] = "          ";
     }
 }
 
@@ -56,7 +56,6 @@ bool row_full(char* row){
     return false;
 }
 
-
 // delete_rows: deletes number of rows starting from startrow.
 void delete_rows(int startrow, int numrows){
     int x; // x coordinate
@@ -80,9 +79,6 @@ void clear_row(char* row){
     return;
 }
 
-
-    
-
 // drop_rows: drops rows above chosen row n steps down
 void drop_rows(int startrow, int numrows){
     int currentrow = startrow;
@@ -96,7 +92,6 @@ void drop_rows(int startrow, int numrows){
         currentrow--;
     }
 }
-        
 
 // get_board_pos: returns char on board coordinates, used for collision
 //                detection
@@ -115,4 +110,28 @@ char* get_board_line(int y){
         return NULL;
 }
 
-
+void drop_tetromino(struct Tetromino* tetromino){
+    int x;
+    int y;
+    char* row = (char*) malloc(sizeof(char) * 11);
+    x = tetromino->Block1.x + tetromino->position[0];
+    y = tetromino->Block1.y + tetromino->position[1];
+    strcpy(row, board[y]);
+    row[x] = tetromino->color;
+    board[y] = row;
+    x = tetromino->Block2.x + tetromino->position[0];
+    y = tetromino->Block2.y + tetromino->position[1];
+    strcpy(row, board[y]);
+    row[x] = tetromino->color;
+    board[y] = row;
+    x = tetromino->Block3.x + tetromino->position[0];
+    y = tetromino->Block3.y + tetromino->position[1];
+    strcpy(row, board[y]);
+    row[x] = tetromino->color;
+    board[y] = row;
+    x = tetromino->Block4.x + tetromino->position[0];
+    y = tetromino->Block4.y + tetromino->position[1];
+    strcpy(row, board[y]);
+    row[x] = tetromino->color;
+    board[y] = row;
+}

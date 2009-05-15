@@ -16,12 +16,17 @@ int main(int argc, char** argv){
     }
     screen = SDL_SetVideoMode(320, 640, 32, SDL_SWSURFACE);
     board_create();
-    active_tetromino = tetcreate(TETROMINO_S);
+    active_tetromino = tetcreate(TETROMINO_O);
     int score   = 0;
     int running = 1;
     while (running){
         if (process_key_events(active_tetromino, tetaction)) // if 1 player tries to quit
             running = 0;
+        SDL_Delay(250);
+        if ( !(tetmove('d', active_tetromino)) ){
+            drop_tetromino(active_tetromino);
+            active_tetromino = tetcreate(TETROMINO_O);
+        }
         clear_board(screen);
         draw_tetromino(screen, active_tetromino);
         draw_board(screen);

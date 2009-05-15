@@ -5,6 +5,8 @@
 #include <string.h>
 #include <stdbool.h>
 
+#include "../tetphys/tetromino.h"
+
 #ifndef BOARD_H
 #define BOARD_H
 
@@ -40,5 +42,8 @@ char get_board_pos(int, int);
 
 // get_board_line: returns string of chosen row
 char* get_board_line(int);
+
+// drop_tetromino: places tetromino on board and spawns a new one
+void drop_tetromino(struct Tetromino*);
 
 #endif // BOARD_H

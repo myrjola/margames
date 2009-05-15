@@ -107,3 +107,24 @@ void pointrotate(struct Block* block){
     block->y = (int) (y >= 0) ? (y + 0.5) : (y - 0.5);
     return;
 }
+
+struct Tetromino* tetcreaterand(void){
+    struct Tetromino* tetromino;
+    int roll = rand() % 7;
+    if ( roll == 0 )
+        tetromino = tetcreate(TETROMINO_I);
+    else if ( roll == 1 )
+        tetromino = tetcreate(TETROMINO_J);
+    else if ( roll == 2 )
+        tetromino = tetcreate(TETROMINO_L);
+    else if ( roll == 3 )
+        tetromino = tetcreate(TETROMINO_O);
+    else if ( roll == 4 )
+        tetromino = tetcreate(TETROMINO_S);
+    else if ( roll == 5 )
+        tetromino = tetcreate(TETROMINO_T);
+    else if ( roll == 6 )
+        tetromino = tetcreate(TETROMINO_Z);
+    else
+        return NULL;
+}

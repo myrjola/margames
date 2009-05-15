@@ -43,4 +43,6 @@ void tetrotate(struct Tetromino*);
 //              blocks.
 void pointrotate(struct Block*);
 
+struct Tetromino* tetcreaterand(void);
+
 #endif /* TETROMINO_H */

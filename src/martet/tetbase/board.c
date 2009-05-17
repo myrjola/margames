@@ -35,6 +35,7 @@ int check_rows(void){
                 first_full_row = y;
             }
             rows_to_delete++;
+            y++;
         }
         else if (rows_to_delete == 0){ // none full rows found continue search
             y++;
@@ -47,13 +48,12 @@ int check_rows(void){
 }
 
 bool row_full(char* row){
-    int x = 0; // x coordinate
-    while (row[x++] != ' '){ // while block found on column
-        if (x == BOARD_WIDTH){    // if row is full
-            return true;
+    int i;
+    for (i = 0; i < BOARD_WIDTH; ++i){
+        if (row[i] == ' ')
+            return false;
         }
-    }
-    return false;
+    return true;
 }
 
 // delete_rows: deletes number of rows starting from startrow.
@@ -84,7 +84,7 @@ void drop_rows(int startrow, int numrows){
     int currentrow = startrow;
     char* source; // which row to drop
     char* dest;   // where to drop
-    while (currentrow >= 0){ // iterate all the way to the top
+    while (currentrow > 0){ // iterate all the way to the top
         source = board[currentrow];
         dest = board[currentrow + numrows];
         dest = strcpy(dest, source);

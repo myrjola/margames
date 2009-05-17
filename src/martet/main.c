@@ -26,7 +26,7 @@ int main(int argc, char** argv){
     while (running){
         if (process_key_events(active_tetromino, tetaction)) // if 1 player tries to quit
             running = 0;
-        if (timer_update(timer))
+        if (timer_update(timer)){
             if ( !tetmove('d', active_tetromino) ){
                 drop_tetromino(active_tetromino);
                 active_tetromino = tetcreaterand();

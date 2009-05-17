@@ -29,13 +29,8 @@ int check_rows(void);
 
 bool row_full(char*);
 
-// delete_rows: deletes number of rows starting from startrow.
-void delete_rows(int, int);
-
-void clear_row(char*);
-
-// drop_rows: drops rows above chosen row n steps down
-void drop_rows(int, int);
+// delete_row: drops the rows above
+void delete_row(int);
 
 // get_board_pos: returns char on board coordinates
 char get_board_pos(int, int);

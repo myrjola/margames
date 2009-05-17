@@ -26,25 +26,17 @@ int convert_coordinate(int coordinate){
 
 // check_rows: calls delete_rows on full rows, returns number of rows deleted
 int check_rows(void){
-    int y = 0;              // y coordinate
-    int first_full_row;     // first found full row
-    int rows_to_delete = 0;
-    while (y < BOARD_HEIGHT){
-        if (row_full(board[y])){
-            if (rows_to_delete == 0){
-                first_full_row = y;
-            }
-            rows_to_delete++;
-            y++;
-        }
-        else if (rows_to_delete == 0){ // none full rows found continue search
-            y++;
-        }
-        else if (rows_to_delete > 0){   // all full rows found, now delete them
-            delete_rows(y, rows_to_delete);
-            return rows_to_delete;
+    int i;
+    int rows_full = 0;
+    for (i = BOARD_HEIGHT - 1; i > 0; --i){
+        if (row_full(board[i])){
+            rows_full = 1;
+            delete_row(i);
         }
     }
+    if (rows_full)
+        check_rows();
+    return 1;
 }
 
 bool row_full(char* row){
@@ -56,41 +48,13 @@ bool row_full(char* row){
     return true;
 }
 
-// delete_rows: deletes number of rows starting from startrow.
-void delete_rows(int startrow, int numrows){
-    int x; // x coordinate
-    int currentrow = startrow;
-    int first_row_to_drop = startrow - 1;
-    int numrowsleft = numrows;
-    while (numrowsleft--){ // while still rows to delete left
-        x = 0; // start from beginning of row
-        clear_row(board[currentrow]);
-        currentrow++;
-    }
-    drop_rows(first_row_to_drop, numrows); // drop the rows above
+void delete_row(int row){
+    int i;
+    char emptyrow[] = "          ";
+    for (i = row; i > 0; --i)
+        strcpy(board[i], board[i - 1]);
+    strcpy(board[i], emptyrow);
     return;
-}
-
-void clear_row(char* row){
-    int x = 0; // x coordinate
-    while (x < BOARD_HEIGHT){
-        row[x++] = ' ';
-    }
-    return;
-}
-
-// drop_rows: drops rows above chosen row n steps down
-void drop_rows(int startrow, int numrows){
-    int currentrow = startrow;
-    char* source; // which row to drop
-    char* dest;   // where to drop
-    while (currentrow > 0){ // iterate all the way to the top
-        source = board[currentrow];
-        dest = board[currentrow + numrows];
-        dest = strcpy(dest, source);
-        clear_row(source); // clear old row
-        currentrow--;
-    }
 }
 
 // get_board_pos: returns char on board coordinates, used for collision

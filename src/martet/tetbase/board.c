@@ -8,14 +8,14 @@ static char** board = NULL;
 // space is empty other chars represent colors
 void board_create(void){
     int i;
+    char emptyrow[] = "          ";
     // allocate memory for board rows
-    board = (char**) malloc(sizeof(char*) * BOARD_HEIGHT);
-    i = 0;
-    while (i <= BOARD_HEIGHT){
+    board = (char**) calloc(BOARD_HEIGHT, sizeof(char*));
+    for (i = 0; i < BOARD_HEIGHT; ++i){
         // allocate memory for board columns
-        *(board + i) = (char*) malloc(sizeof(char) * (BOARD_WIDTH + 1)); // one extra for '\0'
+        board[i] = (char*) calloc(BOARD_WIDTH + 1, sizeof(char)); // one extra for '\0'
         // fill row with whitespace to init it to empty
-        board[i++] = "          ";
+        strcpy(board[i], emptyrow);
     }
 }
 
@@ -113,25 +113,16 @@ char* get_board_line(int y){
 void drop_tetromino(struct Tetromino* tetromino){
     int x;
     int y;
-    char* row = (char*) malloc(sizeof(char) * 11);
     x = tetromino->Block1.x + tetromino->position[0];
     y = tetromino->Block1.y + tetromino->position[1];
-    strcpy(row, board[y]);
-    row[x] = tetromino->color;
-    board[y] = row;
+    board[y][x] = tetromino->color;
     x = tetromino->Block2.x + tetromino->position[0];
     y = tetromino->Block2.y + tetromino->position[1];
-    strcpy(row, board[y]);
-    row[x] = tetromino->color;
-    board[y] = row;
+    board[y][x] = tetromino->color;
     x = tetromino->Block3.x + tetromino->position[0];
     y = tetromino->Block3.y + tetromino->position[1];
-    strcpy(row, board[y]);
-    row[x] = tetromino->color;
-    board[y] = row;
+    board[y][x] = tetromino->color;
     x = tetromino->Block4.x + tetromino->position[0];
     y = tetromino->Block4.y + tetromino->position[1];
-    strcpy(row, board[y]);
-    row[x] = tetromino->color;
-    board[y] = row;
+    board[y][x] = tetromino->color;
 }

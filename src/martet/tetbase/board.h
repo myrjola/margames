@@ -25,7 +25,7 @@ int convert_coordinate(int);
 
 // check_rows: calls delete_rows if full row/-s of blocks found returns no.
 //              of rows deleted
-int check_rows(void);
+int check_rows(int*);
 
 bool row_full(char*);
 

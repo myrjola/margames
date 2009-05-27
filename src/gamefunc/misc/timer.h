@@ -12,7 +12,7 @@ struct Timer{
     unsigned int alarms;
 };
 
-struct Timer* timer_create(void);
+struct Timer* create_timer(void);
 
 void timer_start(struct Timer*);
 

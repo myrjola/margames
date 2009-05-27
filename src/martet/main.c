@@ -1,4 +1,5 @@
 
+#include <time.h>
 #include "tetphys/tetromino.h"
 #include "tetphys/tetphys.h"
 #include "tetgfx/asciigfx.h"
@@ -10,6 +11,7 @@
 
 int main(int argc, char** argv){
     struct Tetromino* active_tetromino;
+    srand((unsigned) time(NULL));
     SDL_Surface* screen     = NULL;
     if (SDL_Init(SDL_INIT_EVERYTHING) == -1){
         printf("Error: SDL didn't initialize\n");
@@ -18,8 +20,8 @@ int main(int argc, char** argv){
     screen = SDL_SetVideoMode(320, 640, 32, SDL_SWSURFACE);
     board_create();
     active_tetromino = tetcreate(TETROMINO_O);
-    int score   = 0;
-    struct Timer* timer = timer_create();
+    int score   = 1;
+    struct Timer* timer = create_timer();
     timer_change_alarm_interval(timer, 500);
     timer_start(timer);
     int running = 1;
@@ -30,13 +32,14 @@ int main(int argc, char** argv){
             if ( !tetmove('d', active_tetromino) ){
                 drop_tetromino(active_tetromino);
                 active_tetromino = tetcreaterand();
+                check_rows(&score);
+                timer_change_alarm_interval(timer, 500 / score);
             }
         }
         clear_board(screen);
         draw_tetromino(screen, active_tetromino);
         draw_board(screen);
         SDL_Flip(screen);
-        score += check_rows();
     }
     return 0;
 }

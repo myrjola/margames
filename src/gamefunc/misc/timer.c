@@ -1,7 +1,7 @@
 
 #include "timer.h"
 
-struct Timer* timer_create(void){
+struct Timer* create_timer(void){
     struct Timer* timer = malloc(sizeof(struct Timer));
     timer->running = 0;
     timer->time_from_start = 0;

@@ -25,17 +25,18 @@ int convert_coordinate(int coordinate){
 }
 
 // check_rows: calls delete_rows on full rows, returns number of rows deleted
-int check_rows(void){
+int check_rows(int* score){
     int i;
     int rows_full = 0;
     for (i = BOARD_HEIGHT - 1; i > 0; --i){
         if (row_full(board[i])){
             rows_full = 1;
             delete_row(i);
+            *score++;
         }
     }
     if (rows_full)
-        check_rows();
+        check_rows(score);
     return 1;
 }
 

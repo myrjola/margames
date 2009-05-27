@@ -21,6 +21,15 @@ int can_block_move(struct Block*, int, int);
 // tetfall: let the tetromino fall down until collision detected
 void tetfall(struct Tetromino*);
 
+
+// tetrotate: rotates the tetromino 90 degrees clockwise
+void tetrotate(struct Tetromino*);
+
+// pointrotate: rotates point in 90 degrees clockwise
+//              relative to origo. Used for tetromino
+//              blocks.
+int* pointrotate(struct Block*);
+
 // if_no_collision(board, x, y): if no block at coordinate return true
 bool if_no_collision(char**, int, int);
 

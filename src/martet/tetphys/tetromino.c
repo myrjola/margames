@@ -67,46 +67,6 @@ struct Tetromino* tetcreate(const int coordinates[4][2]){
     return tetromino;
 }
 
-// tetrotate: rotates the tetromino 90 degrees clockwise
-void tetrotate(struct Tetromino* tetromino){
-    // Block1 allways as pivot point
-    pointrotate(&(tetromino->Block2));
-    pointrotate(&(tetromino->Block3));
-    pointrotate(&(tetromino->Block4));
-    return;
-}
-
-// pointrotate: rotates point in 90 degrees clockwise
-//              relative to origo. Used for tetromino
-//              blocks.
-void pointrotate(struct Block* block){
-    // cast the coordinates to doubles
-    // needed by the math functions
-    double x = (double) block->x;
-    double y = (double) block->y;
-    // distance to origo
-    double distance = sqrt((x*x + y*y));
-    // calculate the initial direction in radians
-    double angle;
-    if (x != 0){
-        angle = acos(x / distance);
-        // angle range 0 , 180 if y not checked
-        if (y < 0)
-            angle = -angle;
-    }
-    else
-        angle = asin(y / distance);
-
-    angle += 1.57;
-
-    // rotation using trigonometry
-    x = distance * cos(angle);
-    y = distance * sin(angle);
-    // approximate the doubles to integers
-    block->x = (int) (x >= 0) ? (x + 0.5) : (x - 0.5);
-    block->y = (int) (y >= 0) ? (y + 0.5) : (y - 0.5);
-    return;
-}
 
 struct Tetromino* tetcreaterand(void){
     struct Tetromino* tetromino;

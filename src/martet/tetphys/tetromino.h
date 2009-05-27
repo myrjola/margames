@@ -35,14 +35,6 @@ struct Tetromino{
 // tetcreate: creates a tetromino and passes the pointer to it
 struct Tetromino* tetcreate(const int coordinates[4][2]);
 
-// tetrotate: rotates the tetromino 90 degrees clockwise
-void tetrotate(struct Tetromino*);
-
-// pointrotate: rotates point in 90 degrees clockwise
-//              relative to origo. Used for tetromino
-//              blocks.
-void pointrotate(struct Block*);
-
 struct Tetromino* tetcreaterand(void);
 
 #endif /* TETROMINO_H */

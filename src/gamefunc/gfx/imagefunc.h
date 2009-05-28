@@ -2,6 +2,11 @@
 #include "SDL/SDL.h"
 #include "SDL/SDL_image.h"
 
-SDL_Surface* load_image(const char* filename);
+#ifndef IMAGEFUNC_H
+#define IMAGEFUNC_H
 
-void draw_surface(int x, int y, SDL_Surface* source, SDL_Surface* target);
+SDL_Surface* load_image(const char*);
+
+void draw_surface(int, int, SDL_Surface*, SDL_Surface*, SDL_Rect*);
+
+#endif // IMAGEFUNC_H

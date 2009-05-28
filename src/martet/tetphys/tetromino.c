@@ -36,11 +36,10 @@ const int TETROMINO_T[4][2] = {{0, 0},
                                {0, -1}};
 
 // Colors of the blocks used by the block writing function
-enum colors {RED = 0, GREEN, BLUE, YELLOW, CYAN,
-             ORANGE, MAGENTA, BROWN, GREY, OLIVE};
+enum colors {RED = 0, YELLOW, GREEN, BLUE, PURPLE, BROWN, GREY};
 
 // tetcreate: creates a tetromino and passes the pointer to it
-struct Tetromino* tetcreate(const int coordinates[4][2]){
+struct Tetromino* tetcreate(const int coordinates[4][2], char color){
     // allocate memory for tetromino
     struct Tetromino* tetromino;
     tetromino = (struct Tetromino*) malloc(sizeof(struct Tetromino));
@@ -61,9 +60,8 @@ struct Tetromino* tetcreate(const int coordinates[4][2]){
     // set the position up and to the middle on the board
     tetromino->position[0] = 5; // width of board = 10
     tetromino->position[1] = 2; // 0 is up 20 is down
-    // lazy as I am just choosing random color, looks as pretty anyways.
-    // in int to char conversion you must add '0' to get the right ASCII code
-    tetromino->color = (char) ((rand() % 10) + '0');
+    
+    tetromino->color = color;
     return tetromino;
 }
 
@@ -72,19 +70,19 @@ struct Tetromino* tetcreaterand(void){
     struct Tetromino* tetromino;
     int roll = rand() % 7;
     if ( roll == 0 )
-        tetromino = tetcreate(TETROMINO_I);
+        tetromino = tetcreate(TETROMINO_I, '0');
     else if ( roll == 1 )
-        tetromino = tetcreate(TETROMINO_J);
+        tetromino = tetcreate(TETROMINO_J, '1');
     else if ( roll == 2 )
-        tetromino = tetcreate(TETROMINO_L);
+        tetromino = tetcreate(TETROMINO_L, '2');
     else if ( roll == 3 )
-        tetromino = tetcreate(TETROMINO_O);
+        tetromino = tetcreate(TETROMINO_O, '3');
     else if ( roll == 4 )
-        tetromino = tetcreate(TETROMINO_S);
+        tetromino = tetcreate(TETROMINO_S, '4');
     else if ( roll == 5 )
-        tetromino = tetcreate(TETROMINO_T);
+        tetromino = tetcreate(TETROMINO_T, '5');
     else if ( roll == 6 )
-        tetromino = tetcreate(TETROMINO_Z);
+        tetromino = tetcreate(TETROMINO_Z, '6');
     else
         return NULL;
 }

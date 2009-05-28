@@ -20,7 +20,7 @@ int main(int argc, char** argv){
         printf("image kaboom.png not found");
         return 1;
     }
-    draw_surface(0, 0, background, screen);
+    draw_surface(0, 0, background, screen, NULL);
     SDL_Flip(screen);
     SDL_Delay(5000);
     SDL_Quit();

@@ -2,8 +2,7 @@
 #include <time.h>
 #include "tetphys/tetromino.h"
 #include "tetphys/tetphys.h"
-#include "tetgfx/asciigfx.h"
-#include "tetgfx/fillrectgfx.h"
+#include "tetgfx/tilegfx.h"
 #include "tetbase/board.h"
 #include "../gamefunc/input/keyeventinput.h"
 #include "../gamefunc/gfx/imagefunc.h"
@@ -19,7 +18,7 @@ int main(int argc, char** argv){
     }
     screen = SDL_SetVideoMode(320, 640, 32, SDL_SWSURFACE);
     board_create();
-    active_tetromino = tetcreate(TETROMINO_O);
+    active_tetromino = tetcreaterand();
     int score   = 1;
     struct Timer* timer = create_timer();
     timer_change_alarm_interval(timer, 500);

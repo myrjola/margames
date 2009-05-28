@@ -33,7 +33,7 @@ struct Tetromino{
 };
 
 // tetcreate: creates a tetromino and passes the pointer to it
-struct Tetromino* tetcreate(const int coordinates[4][2]);
+struct Tetromino* tetcreate(const int coordinates[4][2], char);
 
 struct Tetromino* tetcreaterand(void);
 

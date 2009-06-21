@@ -10,7 +10,7 @@ enum {UP    = 'u',
       RIGHT = 'r'};
 
 // tetaction: actions for tetrominoes based on input.
-void tetaction(char, struct Tetromino*);
+void tetaction(char, void*);
 
 // tetmove: move tetromino left for 'l', right for 'r'
 //          and down for 'd' return 1 if succesful else 0

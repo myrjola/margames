@@ -3,7 +3,7 @@
 #include "tetphys.h"
 #include "../tetbase/board.h"
 
-void tetaction(char input, struct Tetromino* tetromino){
+void tetaction(char input, void* tetromino){
     switch (input){
         case (UP): tetrotate(tetromino); break;
         case (DOWN): tetfall(tetromino); break;
@@ -103,9 +103,9 @@ int* pointrotate(struct Block* block){
     }
     else
         angle = asin(y / distance);
-    
+
     angle += 1.57;
-    
+
     // rotation using trigonometry
     x = distance * cos(angle);
     y = distance * sin(angle);

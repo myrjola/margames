@@ -1,4 +1,5 @@
 #include "tetromino.h"
+#include "tetphys.h"
 
 const int TETROMINO_I[4][2] = {{0, 0},
                                {0, -1},
@@ -59,7 +60,11 @@ struct Tetromino* tetcreate(const int coordinates[4][2], char color){
 
     // set the position up and to the middle on the board
     tetromino->position[0] = 5; // width of board = 10
-    tetromino->position[1] = 2; // 0 is up 20 is down
+    tetromino->position[1] = 1; // 0 is up 20 is down
+
+    // test if board free.
+    if ( !tetmove('d', tetromino) )
+        return NULL;
     
     tetromino->color = color;
     return tetromino;
@@ -85,4 +90,5 @@ struct Tetromino* tetcreaterand(void){
         tetromino = tetcreate(TETROMINO_Z, '6');
     else
         return NULL;
+    return tetromino;
 }

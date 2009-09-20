@@ -41,4 +41,6 @@ char* get_board_line(int);
 // drop_tetromino: places tetromino on board and spawns a new one
 void drop_tetromino(struct Tetromino*);
 
+void board_delete(void);
+
 #endif // BOARD_H

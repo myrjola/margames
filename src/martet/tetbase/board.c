@@ -91,3 +91,12 @@ void drop_tetromino(struct Tetromino* tetromino){
     y = tetromino->Block4.y + tetromino->position[1];
     board[y][x] = tetromino->color;
 }
+
+void board_delete(void){
+    int i;
+    for (i = 0; i < BOARD_HEIGHT; ++i){
+        // allocate memory for board columns
+        free(board[i]);
+    }
+    free(board);
+}

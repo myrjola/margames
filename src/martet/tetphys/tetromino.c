@@ -2,24 +2,24 @@
 #include "tetphys.h"
 
 const int TETROMINO_I[4][2] = {{0, 0},
-                               {0, -1},
-                               {0, 1},
-                               {0, 2}};
+                               {-1, 0},
+                               {1, 0},
+                               {2, 0}};
 
 const int TETROMINO_J[4][2] = {{0, 0},
-                               {-1, 0},
-                               {0, -1},
-                               {0, -2}};
+                               {1, 0},
+                               {2, 0},
+                               {0, -1}};
 
 const int TETROMINO_L[4][2] = {{0, 0},
-                               {0, -1},
-                               {0, -2},
-                               {1, 0}};
+                               {1, 0},
+                               {2, 0},
+                               {0, 1}};
 
 const int TETROMINO_O[4][2] = {{0, 0},
-                               {1, 1},
-                               {1, 0},
-                               {0, 1}};
+                               {-1, -1},
+                               {-1, 0},
+                               {0, -1}};
 
 const int TETROMINO_S[4][2] = {{0, 0},
                                {-1, 0},
@@ -57,8 +57,6 @@ struct Tetromino* tetcreate(const int coordinates[4][2], char color){
     tetromino->Block2.block_number = 2;
     tetromino->Block3.block_number = 3;
     tetromino->Block4.block_number = 4;
-
-    // set the position up and to the middle on the board
     tetromino->position[0] = 5; // width of board = 10
     tetromino->position[1] = 1; // 0 is up 20 is down
 

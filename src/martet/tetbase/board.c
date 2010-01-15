@@ -32,7 +32,7 @@ int check_rows(int* score){
         if (row_full(board[i])){
             rows_full = 1;
             delete_row(i);
-            *score++;
+            *score += 1;
         }
     }
     if (rows_full)

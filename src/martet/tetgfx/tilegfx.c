@@ -1,18 +1,12 @@
 #include "tilegfx.h"
 
-static SDL_Surface* spritesheet = NULL;
 
 SDL_Surface* get_spritesheet(void){
+    static SDL_Surface* spritesheet = NULL;
     if ( spritesheet )
         return spritesheet;
     spritesheet = load_image("data/tetblocks.png");
     return spritesheet;
-}
-
-// clear_board: fills board black
-void clear_board(SDL_Surface* boardsurf){
-    SDL_FillRect(boardsurf, NULL, SDL_MapRGB(boardsurf->format, 0, 0, 0));
-    return;
 }
 
 void draw_tetromino(SDL_Surface* boardsurf, struct Tetromino* tetromino){

@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include "SDL/SDL.h"
 
+#ifndef TIMER_H_
+#define TIMER_H_
+
 struct Timer{
     unsigned int running;
     // time passed from program start to timer start in milliseconds
@@ -22,3 +25,5 @@ void timer_stop(struct Timer*);
 int timer_update(struct Timer*);
 
 void timer_change_alarm_interval(struct Timer*, unsigned int);
+
+#endif

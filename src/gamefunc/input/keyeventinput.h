@@ -2,6 +2,10 @@
 
 #ifndef KEYEVENTINPUT_H
 #define KEYEVENTINPUT_H
+
+enum {KEYEVENT_NOTHING, KEYEVENT_EXIT,
+      KEYEVENT_PAUSE, KEYEVENT_MENU};
+
 // process_key_events: input using SDL_KEY_UP
 // and SDL_KEY_DOWN in case of event a pointer
 // to a function is dereferenced and passed

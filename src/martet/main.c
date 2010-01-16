@@ -11,6 +11,7 @@
 #include "../gamefunc/misc/miscutils.h"
 
 int run_martet(SDL_Surface*, SDL_Surface*);
+void pause_martet(SDL_Surface*, SDL_Surface*);
 int update_status_bar(struct Tetromino*, SDL_Surface*, int);
 
 int main(int argc, char** argv){
@@ -59,8 +60,11 @@ int run_martet(SDL_Surface* screen, SDL_Surface* board){
     timer_start(timer);
     int running = 1;
     while (running){
-        if (process_key_events(active_tetromino, tetaction)) // if 1 player tries to quit
+        int event = process_key_events(active_tetromino, tetaction);
+        if (event == KEYEVENT_EXIT)
             running = 0;
+        else if (event == KEYEVENT_PAUSE)
+            pause_martet(screen, board);
         if (timer_update(timer)){
             if ( !tetmove('d', active_tetromino) ){
                 drop_tetromino(active_tetromino);
@@ -78,6 +82,22 @@ int run_martet(SDL_Surface* screen, SDL_Surface* board){
         draw_board(board);
         draw_surface(0, 0, board, screen, NULL);
         SDL_Flip(screen);
+    }
+}
+
+void pause_action(char c, void* whatever) {
+    return;
+}
+
+void pause_martet(SDL_Surface* screen, SDL_Surface* board) {
+    clear_surface(board, NULL);
+    draw_surface(0, 0, board, screen, NULL);
+    draw_text(74, 315, screen, "PAUSED, 'p' to continue");
+    SDL_Flip(screen);
+    while (true) {
+        int event = process_key_events(NULL, pause_action);
+        if (event == KEYEVENT_PAUSE)
+            return;
     }
 }
 

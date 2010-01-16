@@ -1,1 +1,17 @@
+Dependencies:
+cmake
+SDL
+SDL_image
+SDL_ttf
+
+To build martet:
+mkdir build
+cd build
+cmake ../
+make
+
+To run martet:
+cd src/martet/
+ln -s ../../../data . #symlink needed for graphics and fonts
+./martet
 

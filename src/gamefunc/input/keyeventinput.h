@@ -12,6 +12,6 @@ enum {KEYEVENT_NOTHING, KEYEVENT_EXIT,
 // the key pressed and a pointer to usually
 // an object controlled by input. returns 1
 // if player tries to quit
-int process_key_events(void*, void (*action)(char, void*));
+int process_key_events(void*, int (*action)(char, void*));
 
 #endif // KEYEVENTINPUT_H

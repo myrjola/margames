@@ -12,6 +12,7 @@ SDL_Surface* load_image(const char* filename){
     return NULL;
 }
 
+// draw_surface - simple surface draw function. If clip is NULL whole surface will be drawn
 void draw_surface(int x, int y, SDL_Surface* source, SDL_Surface* target, SDL_Rect* clip){
     /* Temporary rect for offset */
     SDL_Rect temprect;
@@ -21,12 +22,14 @@ void draw_surface(int x, int y, SDL_Surface* source, SDL_Surface* target, SDL_Re
     SDL_BlitSurface(source, clip, target, &temprect);
 }
 
+// clear_surface - fills rect in surface black
 void clear_surface(SDL_Surface* surface, SDL_Rect* cliprect){
     SDL_FillRect(surface, cliprect, SDL_MapRGB(surface->format, 0, 0, 0));
     return;
 }
 
-int draw_text(int x, int y, SDL_Surface* screen, const char* text)
+// draw_text - simple text rendering.
+int draw_text(int x, int y, SDL_Surface* screen, const char* text, Uint8 r, Uint8 b, Uint8 g)
 {
     TTF_Font *font;
     font = TTF_OpenFontIndex("data/Tuffy.ttf", 18, 0);
@@ -34,12 +37,14 @@ int draw_text(int x, int y, SDL_Surface* screen, const char* text)
         printf("TTF_OpenFontIndex: %s\n", TTF_GetError());
         // handle error
     }
-    SDL_Color color = {255,255,255};
+    SDL_Color color = {r, b, g}; 
     SDL_Surface *text_surface;
     text_surface = TTF_RenderText_Solid(font, text, color);
     if (text_surface)
         draw_surface(x, y, text_surface, screen, NULL);
     else
         return 0;
+    SDL_FreeSurface(text_surface);
+    TTF_CloseFont(font);
     return 1;
 }

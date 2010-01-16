@@ -12,6 +12,6 @@ void draw_surface(int, int, SDL_Surface*, SDL_Surface*, SDL_Rect*);
 
 void clear_surface(SDL_Surface*, SDL_Rect*);
 
-int draw_text(int, int, SDL_Surface*, const char*);
+int draw_text(int, int, SDL_Surface*, const char*, Uint8, Uint8, Uint8);
     
 #endif // IMAGEFUNC_H

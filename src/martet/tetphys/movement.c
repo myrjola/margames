@@ -3,7 +3,7 @@
 #include "tetphys.h"
 #include "../tetbase/board.h"
 
-void tetaction(char input, void* tetromino){
+int tetaction(char input, void* tetromino){
     switch (input){
         case (UP): tetrotate(tetromino); break;
         case (DOWN): tetfall(tetromino); break;
@@ -11,6 +11,7 @@ void tetaction(char input, void* tetromino){
         case (RIGHT): tetmove(input, tetromino); break;
         default: break;
     }
+    return 0;
 }
 
 int tetmove(char direction, struct Tetromino* tetromino){

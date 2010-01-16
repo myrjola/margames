@@ -9,10 +9,22 @@
 #include "../gamefunc/gfx/imagefunc.h"
 #include "../gamefunc/misc/timer.h"
 #include "../gamefunc/misc/miscutils.h"
+#include "../gamefunc/misc/simplemenu.h"
 
 int run_martet(SDL_Surface*, SDL_Surface*);
 void pause_martet(SDL_Surface*, SDL_Surface*);
+int menu_martet(SDL_Surface*, SDL_Surface*, struct Menu*);
+int ingame_menu_martet(SDL_Surface*, SDL_Surface*, struct Menu*);
 int update_status_bar(struct Tetromino*, SDL_Surface*, int);
+
+// Two helper functions for menu
+int menu_run_martet() {
+    return 1;
+}
+
+int menu_exit_martet() {
+    return 2;
+}
 
 int main(int argc, char** argv){
     SDL_Surface* screen     = NULL;
@@ -30,17 +42,22 @@ int main(int argc, char** argv){
                                                   0, 0, 0, 0);
     SDL_Surface* border = load_image("data/tetborder.png");
     draw_surface(321, 0, border, screen, NULL);
-    draw_text(400, 32, screen, "Next tetromino:");
-    draw_text(330, 200, screen, "Score: ");
+    draw_text(400, 32, screen, "Next tetromino:", 255, 255, 255);
+    draw_text(330, 200, screen, "Score: ", 255, 255, 255);
+    // create menu
+    struct Menu* menu = menu_create();
+    menu_addelement(menu, "Start Game");
+    menu_addelement(menu, "Quit");
+    menu->active_element = &menu->elements[0];
+    menu->active_element->active = 1;
     // The game loop begins
     while (true){
-        run_martet(screen, board);
+        menu_martet(screen, board, menu);
         board_delete();
         SDL_Surface* game_over_img = load_image("data/gameover.png");
-        draw_surface(110, 320, game_over_img, screen, NULL);
+        draw_surface(100, 320, game_over_img, screen, NULL);
         SDL_Flip(screen);
-        SDL_Delay(5000);
-        exit(0);
+        SDL_Delay(2000);
     }
     return 0;
 }
@@ -48,6 +65,12 @@ int main(int argc, char** argv){
 int run_martet(SDL_Surface* screen, SDL_Surface* board){
     struct Tetromino* active_tetromino;
     struct Tetromino* next_tetromino;
+    // create menu
+    struct Menu* ingame_menu = menu_create();
+    menu_addelement(ingame_menu, "Continue");
+    menu_addelement(ingame_menu, "Quit Current Game");
+    ingame_menu->active_element = &ingame_menu->elements[0];
+    ingame_menu->active_element->active = 1;
     int score = 1;
     srand((unsigned) time(NULL));
     board_create();
@@ -62,7 +85,10 @@ int run_martet(SDL_Surface* screen, SDL_Surface* board){
     while (running){
         int event = process_key_events(active_tetromino, tetaction);
         if (event == KEYEVENT_EXIT)
-            running = 0;
+            exit(0);
+        else if (event == KEYEVENT_MENU)
+            if (ingame_menu_martet(screen, board, ingame_menu) == 1) // quit current game
+                running = 0;
         else if (event == KEYEVENT_PAUSE)
             pause_martet(screen, board);
         if (timer_update(timer)){
@@ -83,22 +109,54 @@ int run_martet(SDL_Surface* screen, SDL_Surface* board){
         draw_surface(0, 0, board, screen, NULL);
         SDL_Flip(screen);
     }
+    menu_destroy(ingame_menu);
 }
 
-void pause_action(char c, void* whatever) {
-    return;
+int pause_action(char c, void* whatever) {
+    return KEYEVENT_NOTHING;
 }
 
 void pause_martet(SDL_Surface* screen, SDL_Surface* board) {
     clear_surface(board, NULL);
     draw_surface(0, 0, board, screen, NULL);
-    draw_text(74, 315, screen, "PAUSED, 'p' to continue");
+    draw_text(74, 315, screen, "PAUSED, 'p' to continue", 255, 255, 255);
     SDL_Flip(screen);
     while (true) {
         int event = process_key_events(NULL, pause_action);
         if (event == KEYEVENT_PAUSE)
             return;
     }
+}
+
+int menu_martet(SDL_Surface* screen, SDL_Surface* board, struct Menu* menu) {
+    int index; // ...of menu item pressed 0 if none
+    clear_surface(board, NULL);
+    draw_surface(0, 0, board, screen, NULL);
+    while (true) {
+        switch(process_key_events(menu, menu_action)) {
+            case (1): run_martet(screen, board);
+                      return 0; break;
+            case (2): exit(2); break;
+        }
+        draw_menu(menu, screen, 120, 300);
+        SDL_Flip(screen);
+    }
+    return 1;
+}
+
+int ingame_menu_martet(SDL_Surface* screen, SDL_Surface* board, struct Menu* menu) {
+    int index; // ...of menu item pressed 0 if none
+    clear_surface(board, NULL);
+    draw_surface(0, 0, board, screen, NULL);
+    while (true) {
+        switch(process_key_events(menu, menu_action)) {
+            case (1): return 0; break;
+            case (2): return 1; break;
+        }
+        draw_menu(menu, screen, 120, 300);
+        SDL_Flip(screen);
+    }
+    return 1;
 }
 
 int update_status_bar(struct Tetromino* next_tetromino, SDL_Surface* screen, int score){
@@ -111,7 +169,7 @@ int update_status_bar(struct Tetromino* next_tetromino, SDL_Surface* screen, int
     cliprect.h = 20;
     itoa(score, scorebuf);
     clear_surface(screen, &cliprect);
-    draw_text(400, 200, screen, scorebuf);
+    draw_text(400, 200, screen, scorebuf, 255, 255, 255);
     // update next tetromino image
     cliprect.x = 416;
     cliprect.y = 64;

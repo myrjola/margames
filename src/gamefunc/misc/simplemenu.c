@@ -3,6 +3,7 @@
 
 struct Menu* menu_create() {
     struct Menu* menu = (struct Menu*) malloc(sizeof(struct Menu));
+    menu->elements = (struct MenuElement*) calloc(20, sizeof(struct MenuElement));
     menu->active_element = NULL;
     menu->length = 0;
     return menu;
@@ -10,20 +11,18 @@ struct Menu* menu_create() {
 
 void menu_destroy(struct Menu* menu) {
     int i;
-    for (i = 0; i < menu->length; i++) {
-        free(&menu->elements[i].text);
-        free(&menu->elements[i]);
+    for (i = 0; i < menu->length - 1; i++) {
+        free(menu->elements[1].text);
     }
+    free(menu->elements);
     free(menu);
 }
 
 void menu_addelement(struct Menu* menu, char* text) {
-    struct MenuElement* element = (struct MenuElement*) malloc(sizeof(struct MenuElement));
-    element->text = (char*) malloc(sizeof(char) * 32); 
+    struct MenuElement* element = &menu->elements[menu->length]; // next free element
+    element->text = (char*) calloc(32, sizeof(char));
     strcpy(element->text, text);
     element->active = 0;
-    menu->elements[menu->length] = *element; // insert element to menu
-    element = &menu->elements[menu->length]; // for some reason the address doesn't stay the same
     element->next = &menu->elements[0]; // wraps around to first element
     element->previous = &menu->elements[menu->length - 1];
     menu->elements[menu->length - 1].next = element; // change the former last element's next

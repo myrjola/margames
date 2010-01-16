@@ -15,7 +15,7 @@ struct MenuElement {
 };
 
 struct Menu {
-    struct MenuElement elements[20]; // maximum of 20 elements
+    struct MenuElement* elements;
     struct MenuElement* active_element;
     int length;
 };

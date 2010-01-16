@@ -17,15 +17,6 @@ int menu_martet(SDL_Surface*, SDL_Surface*, struct Menu*);
 int ingame_menu_martet(SDL_Surface*, SDL_Surface*, struct Menu*);
 int update_status_bar(struct Tetromino*, SDL_Surface*, int);
 
-// Two helper functions for menu
-int menu_run_martet() {
-    return 1;
-}
-
-int menu_exit_martet() {
-    return 2;
-}
-
 int main(int argc, char** argv){
     SDL_Surface* screen     = NULL;
     SDL_Surface* board     = NULL;

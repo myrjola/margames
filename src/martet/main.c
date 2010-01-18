@@ -77,9 +77,10 @@ int run_martet(SDL_Surface* screen, SDL_Surface* board){
         int event = process_key_events(active_tetromino, tetaction);
         if (event == KEYEVENT_EXIT)
             exit(0);
-        else if (event == KEYEVENT_MENU)
+        else if (event == KEYEVENT_MENU) {
             if (ingame_menu_martet(screen, board, ingame_menu) == 1) // quit current game
                 running = 0;
+        }
         else if (event == KEYEVENT_PAUSE)
             pause_martet(screen, board);
         if (timer_update(timer)){

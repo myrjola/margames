@@ -31,7 +31,7 @@ int main(int argc, char** argv){
     screen = SDL_SetVideoMode(608, 640, 32, SDL_SWSURFACE);
     board  = SDL_CreateRGBSurface(SDL_SWSURFACE, 320, 640, 32,
                                                   0, 0, 0, 0);
-    SDL_Surface* border = load_image("data/tetborder.png");
+    SDL_Surface* border = load_image("../data/tetborder.png");
     draw_surface(321, 0, border, screen, NULL);
     draw_text(400, 32, screen, "Next tetromino:", 255, 255, 255);
     draw_text(330, 200, screen, "Score: ", 255, 255, 255);
@@ -45,7 +45,7 @@ int main(int argc, char** argv){
     while (true){
         menu_martet(screen, board, menu);
         board_delete();
-        SDL_Surface* game_over_img = load_image("data/gameover.png");
+        SDL_Surface* game_over_img = load_image("../data/gameover.png");
         draw_surface(100, 320, game_over_img, screen, NULL);
         SDL_Flip(screen);
         SDL_Delay(2000);
@@ -95,8 +95,9 @@ int run_martet(SDL_Surface* screen, SDL_Surface* board){
             }
         }
         clear_surface(board, NULL);
-        draw_tetromino(board, active_tetromino);
         draw_board(board);
+        draw_tetromino(board, active_tetromino);
+        draw_ghost_tetromino(board, active_tetromino);
         draw_surface(0, 0, board, screen, NULL);
         SDL_Flip(screen);
     }
@@ -116,6 +117,8 @@ void pause_martet(SDL_Surface* screen, SDL_Surface* board) {
         int event = process_key_events(NULL, pause_action);
         if (event == KEYEVENT_PAUSE)
             return;
+        else if (event == KEYEVENT_EXIT)
+            exit(0);
     }
 }
 
@@ -125,9 +128,10 @@ int menu_martet(SDL_Surface* screen, SDL_Surface* board, struct Menu* menu) {
     draw_surface(0, 0, board, screen, NULL);
     while (true) {
         switch(process_key_events(menu, menu_action)) {
-            case (1): run_martet(screen, board);
+            case (KEYEVENT_EXIT): exit(2);break;
+            case (2): run_martet(screen, board);
                       return 0; break;
-            case (2): exit(2); break;
+            case (3): exit(2); break;
         }
         draw_menu(menu, screen, 120, 300);
         SDL_Flip(screen);
@@ -141,8 +145,9 @@ int ingame_menu_martet(SDL_Surface* screen, SDL_Surface* board, struct Menu* men
     draw_surface(0, 0, board, screen, NULL);
     while (true) {
         switch(process_key_events(menu, menu_action)) {
-            case (1): return 0; break;
-            case (2): return 1; break;
+            case (1): exit(0);break;
+            case (2): return 0; break;
+            case (3): return 1; break;
         }
         draw_menu(menu, screen, 120, 300);
         SDL_Flip(screen);

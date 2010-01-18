@@ -27,7 +27,7 @@ void menu_addelement(struct Menu* menu, char* text) {
     element->previous = &menu->elements[menu->length - 1];
     menu->elements[menu->length - 1].next = element; // change the former last element's next
     menu->elements[0].previous = element;
-    element->index = ++menu->length; 
+    element->index = ++menu->length + 1; // 0 and 1 reserved for KEYEVENT_NOTHING and KEYEVENT_EXIT
 }
 
 // menu_action - function to be passed to process_key_events

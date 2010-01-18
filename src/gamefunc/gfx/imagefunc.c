@@ -32,7 +32,7 @@ void clear_surface(SDL_Surface* surface, SDL_Rect* cliprect){
 int draw_text(int x, int y, SDL_Surface* screen, const char* text, Uint8 r, Uint8 b, Uint8 g)
 {
     TTF_Font *font;
-    font = TTF_OpenFontIndex("data/Tuffy.ttf", 18, 0);
+    font = TTF_OpenFontIndex("../data/Tuffy.ttf", 18, 0);
     if(!font) {
         printf("TTF_OpenFontIndex: %s\n", TTF_GetError());
         // handle error

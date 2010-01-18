@@ -1,12 +1,19 @@
 #include "tilegfx.h"
 
 
-SDL_Surface* get_spritesheet(void){
+SDL_Surface* get_spritesheet(int transparent){
     static SDL_Surface* spritesheet = NULL;
-    if ( spritesheet )
-        return spritesheet;
-    spritesheet = load_image("data/tetblocks.png");
-    return spritesheet;
+    static SDL_Surface* spritesheet_transparent = NULL;
+    if ( spritesheet ) {
+        if (transparent)
+            return spritesheet_transparent;
+        else if (!transparent)
+            return spritesheet;
+    }
+    spritesheet = load_image("../data/tetblocks.png");
+    spritesheet_transparent = load_image("../data/tetblocks.png");
+    SDL_SetAlpha(spritesheet_transparent, SDL_SRCALPHA, 100);
+    return get_spritesheet(transparent);
 }
 
 void draw_tetromino(SDL_Surface* boardsurf, struct Tetromino* tetromino){
@@ -14,11 +21,25 @@ void draw_tetromino(SDL_Surface* boardsurf, struct Tetromino* tetromino){
     int y;
     x = tetromino->position[0];
     y = tetromino->position[1];
-    draw_block(boardsurf, &tetromino->Block1, x , y, tetromino->color);
-    draw_block(boardsurf, &tetromino->Block2, x , y, tetromino->color);
-    draw_block(boardsurf, &tetromino->Block3, x , y, tetromino->color);
-    draw_block(boardsurf, &tetromino->Block4, x , y, tetromino->color);
+    draw_block(boardsurf, &tetromino->Block1, x , y, tetromino->color, 0);
+    draw_block(boardsurf, &tetromino->Block2, x , y, tetromino->color, 0);
+    draw_block(boardsurf, &tetromino->Block3, x , y, tetromino->color, 0);
+    draw_block(boardsurf, &tetromino->Block4, x , y, tetromino->color, 0);
     return;
+}
+
+void draw_ghost_tetromino(SDL_Surface * boardsurf, struct Tetromino* tetromino) {
+    int x;
+    int y;
+    struct Tetromino ghost = *tetromino;
+    while (tetmove('d', &ghost)) // drop the tetromino until collision
+        ;
+    x = ghost.position[0];
+    y = ghost.position[1];
+    draw_block(boardsurf, &ghost.Block1, x , y, ghost.color, 1);
+    draw_block(boardsurf, &ghost.Block2, x , y, ghost.color, 1);
+    draw_block(boardsurf, &ghost.Block3, x , y, ghost.color, 1);
+    draw_block(boardsurf, &ghost.Block4, x , y, ghost.color, 1);
 }
 
 // draw_board: draws the blocks to the board
@@ -31,7 +52,7 @@ void draw_board(SDL_Surface* boardsurf){
             blockpos = get_board_pos(x, y);
             if (blockpos != ' '){ // if blockpos not empty
                 draw_block(boardsurf, NULL, x,
-                            y, blockpos);
+                            y, blockpos, 0);
             }
             x++;
         }
@@ -41,8 +62,13 @@ void draw_board(SDL_Surface* boardsurf){
     return;
 }
 
-void draw_block(SDL_Surface* boardsurf, struct Block* block, int x, int y, char color){
-    SDL_Surface* blocksprites = get_spritesheet();
+void draw_block(SDL_Surface* boardsurf, struct Block* block, int x, int y,
+                char color, int transparent){
+    SDL_Surface* blocksprites;
+    if (transparent)
+        blocksprites = get_spritesheet(1);
+    else if (!transparent)
+        blocksprites = get_spritesheet(0);
     int newx = x;
     int newy = y;
     //

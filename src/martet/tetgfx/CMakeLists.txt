@@ -3,4 +3,5 @@
 add_library(asciigfx asciigfx.c)
 add_library(fillrectgfx fillrectgfx.c)
 add_library(tilegfx tilegfx.c)
-#target_link_libraries(tilegfx gamefuncgfx)
+INSTALL(TARGETS tilegfx
+        DESTINATION margames/lib)

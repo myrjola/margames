@@ -163,7 +163,7 @@ int update_status_bar(struct Tetromino* next_tetromino, SDL_Surface* screen, int
     cliprect.y = 200;
     cliprect.w = 208;
     cliprect.h = 20;
-    itoa(score, scorebuf);
+    itos(score, scorebuf);
     clear_surface(screen, &cliprect);
     draw_text(400, 200, screen, scorebuf, 255, 255, 255);
     // update next tetromino image

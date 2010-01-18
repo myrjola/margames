@@ -1,8 +1,8 @@
 
-#ifndef UTIL_H_
-#define UTIL_H_
+#ifndef MISCUTILS_H_
+#define MISCUTILS_H_
 
 void reverse(char[]);
-void itoa(int, char[]);
+void itos(int, char[]);
 
 #endif

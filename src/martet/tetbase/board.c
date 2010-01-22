@@ -90,6 +90,7 @@ void drop_tetromino(struct Tetromino* tetromino){
     x = tetromino->Block4.x + tetromino->position[0];
     y = tetromino->Block4.y + tetromino->position[1];
     board[y][x] = tetromino->color;
+    tetromino->color = TETROMINO_DELETE;
 }
 
 void board_delete(void){

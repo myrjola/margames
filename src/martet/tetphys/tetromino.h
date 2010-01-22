@@ -4,6 +4,8 @@
 #ifndef TETROMINO_H
 #define TETROMINO_H
 
+enum {TETROMINO_DELETE = 'x'};
+
 // Tetrominoes as coordinates
 const int TETROMINO_I[4][2];
 const int TETROMINO_J[4][2];

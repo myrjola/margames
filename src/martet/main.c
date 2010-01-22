@@ -29,6 +29,7 @@ int main(int argc, char** argv){
         return 1;
     }
     screen = SDL_SetVideoMode(608, 640, 32, SDL_SWSURFACE);
+    SDL_WM_SetCaption("martet", "martet");
     board  = SDL_CreateRGBSurface(SDL_SWSURFACE, 320, 640, 32,
                                                   0, 0, 0, 0);
     SDL_Surface* border = load_image("../data/tetborder.png");
@@ -78,22 +79,28 @@ int run_martet(SDL_Surface* screen, SDL_Surface* board){
         if (event == KEYEVENT_EXIT)
             exit(0);
         else if (event == KEYEVENT_MENU) {
-            if (ingame_menu_martet(screen, board, ingame_menu) == 1) // quit current game
+            if (ingame_menu_martet(screen, board, ingame_menu) == 1)
                 running = 0;
         }
         else if (event == KEYEVENT_PAUSE)
             pause_martet(screen, board);
         if (timer_update(timer)){
-            if ( !tetmove('d', active_tetromino) ){
+            // check if tetromino dropped to board with tetfall.
+            if ( active_tetromino->color == TETROMINO_DELETE )
+                ;
+            else if ( !tetmove('d', active_tetromino) ) { // if collision
                 drop_tetromino(active_tetromino);
+                active_tetromino->color = TETROMINO_DELETE;
+            }
+            if ( active_tetromino->color == TETROMINO_DELETE ) {
                 active_tetromino = next_tetromino;
                 next_tetromino   = tetcreaterand();
-                if ( next_tetromino == NULL )
-                    break;
-                check_rows(&score);
-                update_status_bar(next_tetromino, screen, score);
-                timer_change_alarm_interval(timer, 400 / (score/10+1) );
             }
+            if ( next_tetromino == NULL )
+                break;
+            check_rows(&score);
+            update_status_bar(next_tetromino, screen, score);
+            timer_change_alarm_interval(timer, 400 / (score/10+1) );
         }
         clear_surface(board, NULL);
         draw_board(board);
@@ -140,7 +147,8 @@ int menu_martet(SDL_Surface* screen, SDL_Surface* board, struct Menu* menu) {
     return 1;
 }
 
-int ingame_menu_martet(SDL_Surface* screen, SDL_Surface* board, struct Menu* menu) {
+int ingame_menu_martet(SDL_Surface* screen, SDL_Surface* board,
+                       struct Menu* menu) {
     int index; // ...of menu item pressed 0 if none
     clear_surface(board, NULL);
     draw_surface(0, 0, board, screen, NULL);
@@ -156,7 +164,8 @@ int ingame_menu_martet(SDL_Surface* screen, SDL_Surface* board, struct Menu* men
     return 1;
 }
 
-int update_status_bar(struct Tetromino* next_tetromino, SDL_Surface* screen, int score){
+int update_status_bar(struct Tetromino* next_tetromino, SDL_Surface* screen,
+                      int score){
     // update score
     char scorebuf[65];
     SDL_Rect cliprect;

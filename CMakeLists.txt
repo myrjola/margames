@@ -9,7 +9,7 @@ find_package(SDL_ttf REQUIRED)
 add_subdirectory(src)
 
 INSTALL(DIRECTORY data
-        DESTINATION margames)
+        DESTINATION .)
 INCLUDE(CPack)
 INCLUDE(InstallRequiredSystemLibraries)
 

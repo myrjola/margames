@@ -12,6 +12,8 @@ make
 
 To run martet:
 cd src/martet/
-ln -s ../../../data . #symlink needed for graphics and fonts
+mkdir ../data
+ln -s ../../../data/* ../data #symlink needed for graphics and fonts
 ./martet
 
+Alternatively just make install and run the executable.

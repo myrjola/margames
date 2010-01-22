@@ -1,8 +1,5 @@
 project(martet)
 
-add_subdirectory(tetgfx)
-add_subdirectory(tetbase)
-
 include_directories(${SDL_INCLUDES}
                     ${CMAKE_CURRENT_SOURCE_DIR})
 set(tetbase_lib_SRCS board.c movement.c tetromino.c)

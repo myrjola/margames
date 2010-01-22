@@ -77,6 +77,9 @@ char* get_board_line(int y){
 void place_tetromino(struct Tetromino* tetromino){
     int x;
     int y;
+    if (tetromino->color == 'x') { // tetromino should be deleted
+        return;
+    }
     x = tetromino->Block1.x + tetromino->position[0];
     y = tetromino->Block1.y + tetromino->position[1];
     board[y][x] = tetromino->color;

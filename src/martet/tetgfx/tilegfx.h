@@ -2,7 +2,7 @@
 
 #include <SDL/SDL.h>
 #include "../../gamefunc/gfx/imagefunc.h"
-#include "../tetbase/board.h"
+#include "../tetbase/tetbase.h"
 
 #ifndef TILEGFX_H
 #define TILEGFX_H

@@ -1,6 +1,5 @@
-
 // the board where the gameplay happens and some related functions.
-#include "board.h"
+#include "tetbase.h"
 
 static char** board = NULL;
 

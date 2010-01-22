@@ -1,10 +1,8 @@
 
 #include <stdlib.h>
 #include <time.h>
-#include "tetphys/tetromino.h"
-#include "tetphys/tetphys.h"
+#include "tetbase/tetbase.h"
 #include "tetgfx/tilegfx.h"
-#include "tetbase/board.h"
 #include "../gamefunc/input/keyeventinput.h"
 #include "../gamefunc/gfx/imagefunc.h"
 #include "../gamefunc/misc/timer.h"

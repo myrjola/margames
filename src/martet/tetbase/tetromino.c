@@ -1,43 +1,4 @@
-#include "tetromino.h"
-#include "tetphys.h"
-
-const int TETROMINO_I[4][2] = {{0, 0},
-                               {-1, 0},
-                               {1, 0},
-                               {2, 0}};
-
-const int TETROMINO_J[4][2] = {{0, 0},
-                               {1, 0},
-                               {2, 0},
-                               {0, -1}};
-
-const int TETROMINO_L[4][2] = {{0, 0},
-                               {1, 0},
-                               {2, 0},
-                               {0, 1}};
-
-const int TETROMINO_O[4][2] = {{0, 0},
-                               {-1, -1},
-                               {-1, 0},
-                               {0, -1}};
-
-const int TETROMINO_S[4][2] = {{0, 0},
-                               {-1, 0},
-                               {0, -1},
-                               {1, -1}};
-
-const int TETROMINO_Z[4][2] = {{0, 0},
-                               {1, 0},
-                               {0, -1},
-                               {-1, -1}};
-
-const int TETROMINO_T[4][2] = {{0, 0},
-                               {-1, 0},
-                               {1, 0},
-                               {0, -1}};
-
-// Colors of the blocks used by the block writing function
-enum colors {RED = 0, YELLOW, GREEN, BLUE, PURPLE, BROWN, GREY};
+#include "tetbase.h"
 
 // tetcreate: creates a tetromino and passes the pointer to it
 struct Tetromino* tetcreate(const int coordinates[4][2], char color){

@@ -1,5 +1,5 @@
-set(tetbase_lib_SRCS board.c)
+set(tetbase_lib_SRCS board.c movement.c tetromino.c)
 add_library(tetbase ${tetbase_lib_SRCS})
 
-INSTALL(TARGETS tetbase
-        DESTINATION margames/lib)
+# m = <math.h> library
+target_link_libraries(tetbase m)

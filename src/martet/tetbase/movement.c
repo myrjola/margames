@@ -1,7 +1,4 @@
-
-#include <stdio.h>
-#include "tetphys.h"
-#include "../tetbase/board.h"
+#include "tetbase.h"
 
 int tetaction(char input, void* tetromino){
     switch (input){

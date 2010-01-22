@@ -34,7 +34,7 @@ int main(int argc, char** argv){
                                                   0, 0, 0, 0);
     SDL_Surface* border = load_image("../data/tetborder.png");
     draw_surface(321, 0, border, screen, NULL);
-    draw_text(400, 32, screen, "Next tetromino:", 255, 255, 255);
+    draw_text(410, 35, screen, "Next tetromino:", 255, 255, 255),
     draw_text(330, 200, screen, "Score: ", 255, 255, 255);
     // create menu
     struct Menu* menu = menu_create();
@@ -50,11 +50,11 @@ int main(int argc, char** argv){
             char* line = get_board_line(i);
             for (j = 0; j < BOARD_WIDTH; j++) {
                 line[j] = rand() % 7 + '0';
-                draw_board(board);
-                draw_surface(0, 0, board, screen, NULL);
-                SDL_Flip(screen);
-                SDL_Delay(5);
             }
+            draw_board(board);
+            draw_surface(0, 0, board, screen, NULL);
+            SDL_Flip(screen);
+            SDL_Delay(50);
         }
         board_delete();
     }
@@ -148,7 +148,8 @@ int menu_martet(SDL_Surface* screen, SDL_Surface* board, struct Menu* menu) {
                       return 0; break;
             case (3): exit(2); break;
         }
-        draw_menu(menu, screen, 120, 300);
+        draw_menu(menu, board, 120, 300);
+        draw_surface(0, 0, board, screen, NULL);
         SDL_Flip(screen);
     }
     return 1;
@@ -165,7 +166,8 @@ int ingame_menu_martet(SDL_Surface* screen, SDL_Surface* board,
             case (2): return 0; break;
             case (3): return 1; break;
         }
-        draw_menu(menu, screen, 120, 300);
+        draw_menu(menu, board, 120, 300);
+        draw_surface(0, 0, board, screen, NULL);
         SDL_Flip(screen);
     }
     return 1;

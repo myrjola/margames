@@ -12,7 +12,6 @@ SDL_Surface* load_image(const char* filename){
     return NULL;
 }
 
-// draw_surface - simple surface draw function. If clip is NULL whole surface will be drawn
 void draw_surface(int x, int y, SDL_Surface* source, SDL_Surface* target, SDL_Rect* clip){
     /* Temporary rect for offset */
     SDL_Rect temprect;
@@ -22,29 +21,42 @@ void draw_surface(int x, int y, SDL_Surface* source, SDL_Surface* target, SDL_Re
     SDL_BlitSurface(source, clip, target, &temprect);
 }
 
-// clear_surface - fills rect in surface black
+void draw_surface_centered(SDL_Surface* source, SDL_Surface* target) {
+    /* Temporary rect for offset */
+    SDL_Rect temprect;
+    temprect.x = (target->w / 2) - (source->w / 2);
+    temprect.y = (target->h / 2) - (source->h / 2);
+    /* Blitting time */
+    SDL_BlitSurface(source, NULL, target, &temprect);
+}
+
 void clear_surface(SDL_Surface* surface, SDL_Rect* cliprect){
     SDL_FillRect(surface, cliprect, SDL_MapRGB(surface->format, 0, 0, 0));
     return;
 }
 
-// draw_text - simple text rendering.
-int draw_text(int x, int y, SDL_Surface* screen, const char* text, Uint8 r, Uint8 b, Uint8 g)
+
+TTF_Font* font = NULL;
+
+SDL_Surface* draw_text(int x, int y, SDL_Surface* surf, const char* text, Uint8 r, Uint8 b, Uint8 g)
 {
-    TTF_Font *font;
-    font = TTF_OpenFontIndex("../data/Tuffy.ttf", 18, 0);
-    if(!font) {
-        printf("TTF_OpenFontIndex: %s\n", TTF_GetError());
-        // handle error
+    if (!font) {
+        font = TTF_OpenFont("../data/Tuffy.ttf", 18);
     }
-    SDL_Color color = {r, b, g}; 
+    if (!font) {
+        // handle error
+        printf("TTF_OpenFont: %s\n", TTF_GetError());
+    }
+    SDL_Color color = {r, b, g};
     SDL_Surface *text_surface;
     text_surface = TTF_RenderText_Solid(font, text, color);
+    if (surf == NULL)
+        return text_surface;
     if (text_surface)
-        draw_surface(x, y, text_surface, screen, NULL);
+        draw_surface(x, y, text_surface, surf, NULL);
     else
-        return 0;
+        return NULL;
     SDL_FreeSurface(text_surface);
-    TTF_CloseFont(font);
-    return 1;
+    return NULL;
 }
+

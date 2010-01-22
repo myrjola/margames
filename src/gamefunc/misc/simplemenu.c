@@ -51,24 +51,31 @@ int menu_action(char input, void* voidmenu){
     return 0;
 }
 
-// draw_menu - draws menu on surface, remember to blit to screen and flip
+// draw_menu - draws menu centered on surface
 void draw_menu(struct Menu* menu, SDL_Surface* destination, int oldx, int oldy) {
     struct MenuElement* element;
     int i;
-    int x = oldx;
-    int y = oldy;
-    SDL_Rect cliprect;
-    cliprect.x = x;
-    cliprect.y = y;
-    cliprect.w = 65;
-    cliprect.h = menu->length*25;
-    //clear_surface(destination, &cliprect);
+    int x = 0;
+    int y = 0;
+    int w = 200;
+    int h = menu->length*25;
+    SDL_Surface* menusurf = SDL_CreateRGBSurface(SDL_SWSURFACE, w, h, 32,
+                                                 0, 0, 0, 0);
+    clear_surface(menusurf, NULL);
     for (i = 0; i < menu->length; i++) {
         element = &menu->elements[i];
-        if (element->active)
-            draw_text(x, y, destination, element->text, 255, 0, 0);
-        else
-            draw_text(x, y, destination, element->text, 255, 255, 255);
+        if (element->active) { // draw active element red
+            draw_surface(x, y, 
+                draw_text(0, 0, NULL, element->text, 255, 0, 0),
+                menusurf, NULL);
+        }
+        else {
+            draw_surface(x, y, //draw inactive element white
+                draw_text(0, 0, NULL, element->text, 255, 255, 255),
+                menusurf, NULL);
+        }
         y += 25;
     }
+    draw_surface_centered(menusurf, destination);
+    SDL_FreeSurface(menusurf);
 }

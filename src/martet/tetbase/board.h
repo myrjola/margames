@@ -38,8 +38,8 @@ char get_board_pos(int, int);
 // get_board_line: returns string of chosen row
 char* get_board_line(int);
 
-// drop_tetromino: places tetromino on board and spawns a new one
-void drop_tetromino(struct Tetromino*);
+// place_tetromino: places tetromino on board and spawns a new one
+void place_tetromino(struct Tetromino*);
 
 void board_delete(void);
 

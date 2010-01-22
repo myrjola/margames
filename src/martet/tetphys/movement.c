@@ -47,7 +47,7 @@ can_block_move(struct Block* block, int x, int y){
 void tetfall(struct Tetromino* tetromino){
     while (tetmove('d', tetromino)) // drop the tetromino until collision
         ;
-    drop_tetromino(tetromino);
+    place_tetromino(tetromino);
     return;
 }
 

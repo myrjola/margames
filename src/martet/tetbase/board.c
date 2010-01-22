@@ -75,7 +75,7 @@ char* get_board_line(int y){
         return NULL;
 }
 
-void drop_tetromino(struct Tetromino* tetromino){
+void place_tetromino(struct Tetromino* tetromino){
     int x;
     int y;
     x = tetromino->Block1.x + tetromino->position[0];

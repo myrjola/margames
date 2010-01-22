@@ -89,7 +89,7 @@ int run_martet(SDL_Surface* screen, SDL_Surface* board){
             if ( active_tetromino->color == TETROMINO_DELETE )
                 ;
             else if ( !tetmove('d', active_tetromino) ) { // if collision
-                drop_tetromino(active_tetromino);
+                place_tetromino(active_tetromino);
                 active_tetromino->color = TETROMINO_DELETE;
             }
             if ( active_tetromino->color == TETROMINO_DELETE ) {

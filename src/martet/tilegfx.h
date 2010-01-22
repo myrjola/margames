@@ -1,8 +1,8 @@
 // simple tile graphics engine for martet
 
 #include <SDL/SDL.h>
-#include "../../gamefunc/gfx/imagefunc.h"
-#include "../tetbase/tetbase.h"
+#include "../gamefunc/gfx/imagefunc.h"
+#include "tetbase.h"
 
 #ifndef TILEGFX_H
 #define TILEGFX_H

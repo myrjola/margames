@@ -18,6 +18,8 @@ int update_status_bar(struct Tetromino*, SDL_Surface*, int);
 int main(int argc, char** argv){
     SDL_Surface* screen     = NULL;
     SDL_Surface* board     = NULL;
+    int i;
+    int j;
     if (SDL_Init(SDL_INIT_EVERYTHING) == -1){
         printf("Error: SDL didn't initialize\n");
         return 1;
@@ -43,11 +45,18 @@ int main(int argc, char** argv){
     // The game loop begins
     while (true){
         menu_martet(screen, board, menu);
+        // fill the board with blocks on game over
+        for (i = 0; i < BOARD_HEIGHT; i++) {
+            char* line = get_board_line(i);
+            for (j = 0; j < BOARD_WIDTH; j++) {
+                line[j] = rand() % 7 + '0';
+                draw_board(board);
+                draw_surface(0, 0, board, screen, NULL);
+                SDL_Flip(screen);
+                SDL_Delay(5);
+            }
+        }
         board_delete();
-        SDL_Surface* game_over_img = load_image("../data/gameover.png");
-        draw_surface(100, 320, game_over_img, screen, NULL);
-        SDL_Flip(screen);
-        SDL_Delay(2000);
     }
     return 0;
 }

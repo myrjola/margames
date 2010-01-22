@@ -10,7 +10,7 @@ cd build
 cmake ../
 make
 
-To run martet:
+To run martet after build:
 cd src/martet/
 mkdir ../data
 ln -s ../../../data/* ../data #symlink needed for graphics and fonts

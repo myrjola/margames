@@ -1,4 +1,41 @@
+
 #include "tetbase.h"
+
+// Tetrominoes as coordinates
+const int TETROMINO_I[4][2] = {{0, 0},
+                               {-1, 0},
+                               {1, 0},
+                               {2, 0}};
+
+const int TETROMINO_J[4][2] = {{0, 0},
+                               {1, 0},
+                               {2, 0},
+                               {0, -1}};
+
+const int TETROMINO_L[4][2] = {{0, 0},
+                               {1, 0},
+                               {2, 0},
+                               {0, 1}};
+
+const int TETROMINO_O[4][2] = {{0, 0},
+                               {-1, -1},
+                               {-1, 0},
+                               {0, -1}};
+
+const int TETROMINO_S[4][2] = {{0, 0},
+                               {-1, 0},
+                               {0, -1},
+                               {1, -1}};
+
+const int TETROMINO_Z[4][2] = {{0, 0},
+                               {1, 0},
+                               {0, -1},
+                               {-1, -1}};
+
+const int TETROMINO_T[4][2] = {{0, 0},
+                               {-1, 0},
+                               {1, 0},
+                               {0, -1}};
 
 // tetcreate: creates a tetromino and passes the pointer to it
 struct Tetromino* tetcreate(const int coordinates[4][2], char color){

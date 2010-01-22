@@ -21,41 +21,13 @@ enum {BLOCK_SIZE = 32,
 enum colors {RED = 0, YELLOW, GREEN, BLUE, PURPLE, BROWN, GREY};
 
 // Tetrominoes as coordinates
-const int TETROMINO_I[4][2] = {{0, 0},
-                               {-1, 0},
-                               {1, 0},
-                               {2, 0}};
-
-const int TETROMINO_J[4][2] = {{0, 0},
-                               {1, 0},
-                               {2, 0},
-                               {0, -1}};
-
-const int TETROMINO_L[4][2] = {{0, 0},
-                               {1, 0},
-                               {2, 0},
-                               {0, 1}};
-
-const int TETROMINO_O[4][2] = {{0, 0},
-                               {-1, -1},
-                               {-1, 0},
-                               {0, -1}};
-
-const int TETROMINO_S[4][2] = {{0, 0},
-                               {-1, 0},
-                               {0, -1},
-                               {1, -1}};
-
-const int TETROMINO_Z[4][2] = {{0, 0},
-                               {1, 0},
-                               {0, -1},
-                               {-1, -1}};
-
-const int TETROMINO_T[4][2] = {{0, 0},
-                               {-1, 0},
-                               {1, 0},
-                               {0, -1}};
-
+const int TETROMINO_I[4][2];
+const int TETROMINO_J[4][2];
+const int TETROMINO_L[4][2];
+const int TETROMINO_O[4][2];
+const int TETROMINO_S[4][2];
+const int TETROMINO_Z[4][2];
+const int TETROMINO_T[4][2];
 
 struct Block{
     int x;

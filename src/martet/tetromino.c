@@ -66,25 +66,57 @@ struct Tetromino* tetcreate(const int coordinates[4][2], char color){
     return tetromino;
 }
 
+// check_bag: check if a specific shape is taken from the bag
+int check_bag(int roll, int bag_length, int bag[]) {
+    bool shape_taken = false;
+    int i;
+    for (i = 0; i < bag_length; i++) {
+        if ( roll == bag[i] ) { // shape already taken
+            shape_taken = true;
+            if ( roll <= 4 ) { // if roll in the lower half
+                roll = rand() % 4 + 3; // choose one from the upper half
+                break;
+            }
+            else {
+                roll = rand() % 3;
+                break;
+            }
+        }
+    }
+    if (shape_taken) {
+        return check_bag(roll, bag_length, bag);
+    }
+    return roll;
+}
+    
+    
 
 struct Tetromino* tetcreaterand(void){
     struct Tetromino* tetromino;
+    static int* bag = NULL;
+    if (bag == NULL) {
+        bag = (int*) calloc(7, sizeof(int));
+    }
+    static int bag_length = 7;
+    int i;
     int roll = rand() % 7;
-    if ( roll == 0 )
-        tetromino = tetcreate(TETROMINO_I, '0');
-    else if ( roll == 1 )
-        tetromino = tetcreate(TETROMINO_J, '1');
-    else if ( roll == 2 )
-        tetromino = tetcreate(TETROMINO_L, '2');
-    else if ( roll == 3 )
-        tetromino = tetcreate(TETROMINO_O, '3');
-    else if ( roll == 4 )
-        tetromino = tetcreate(TETROMINO_S, '4');
-    else if ( roll == 5 )
-        tetromino = tetcreate(TETROMINO_T, '5');
-    else if ( roll == 6 )
-        tetromino = tetcreate(TETROMINO_Z, '6');
-    else
-        return NULL;
+    if (bag_length == 7) { // bag full
+        for (i = 0; i < bag_length; i++) {
+            bag[i] = 0; // reset bag
+        }
+        bag_length = 0;
+    }
+    roll = check_bag(roll, bag_length, bag);
+    bag[bag_length++] = roll;
+    switch (roll) {
+        case (0): tetromino = tetcreate(TETROMINO_I, '0'); break;
+        case (1): tetromino = tetcreate(TETROMINO_J, '1'); break;
+        case (2): tetromino = tetcreate(TETROMINO_L, '2'); break;
+        case (3): tetromino = tetcreate(TETROMINO_O, '3'); break;
+        case (4): tetromino = tetcreate(TETROMINO_S, '4'); break;
+        case (5): tetromino = tetcreate(TETROMINO_Z, '5'); break;
+        case (6): tetromino = tetcreate(TETROMINO_T, '6'); break;
+        default: return NULL;
+    }
     return tetromino;
 }

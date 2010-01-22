@@ -100,6 +100,10 @@ bool if_no_collision(char**, int, int);
 // tetcreate: creates a tetromino and passes the pointer to it
 struct Tetromino* tetcreate(const int coordinates[4][2], char);
 
+// tetcreaterand: creates a random tetromino using the a bag.
+//                The bag consists of all the seven tetrominoes which
+//                are then dealt to the piece sequence before generating
+//                another bag.
 struct Tetromino* tetcreaterand(void);
 
 #endif // TETBASE_H_

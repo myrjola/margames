@@ -74,7 +74,7 @@ char* get_board_line(int y){
         return NULL;
 }
 
-void place_tetromino(struct Tetromino* tetromino){
+void place_tetromino(Tetromino* tetromino){
     int x;
     int y;
     if (tetromino->color == 'x') { // tetromino should be deleted
@@ -98,7 +98,7 @@ void place_tetromino(struct Tetromino* tetromino){
 void board_delete(void){
     int i;
     for (i = 0; i < BOARD_HEIGHT; ++i){
-        // allocate memory for board columns
+        // deallocate memory for board columns
         free(board[i]);
     }
     free(board);

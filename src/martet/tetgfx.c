@@ -1,7 +1,7 @@
-#include "tilegfx.h"
+#include "tetgfx.h"
 
 
-SDL_Surface* get_spritesheet(int transparent){
+SDL_Surface* get_spritesheet(bool transparent){
     static SDL_Surface* spritesheet = NULL;
     static SDL_Surface* spritesheet_transparent = NULL;
     if ( spritesheet ) {
@@ -66,9 +66,9 @@ void draw_block(SDL_Surface* boardsurf, struct Block* block, int x, int y,
                 char color, int transparent){
     SDL_Surface* blocksprites;
     if (transparent)
-        blocksprites = get_spritesheet(1);
+        blocksprites = get_spritesheet(true);
     else if (!transparent)
-        blocksprites = get_spritesheet(0);
+        blocksprites = get_spritesheet(false);
     int newx = x;
     int newy = y;
     //

@@ -35,7 +35,7 @@ struct Block{
     int block_number; // tetromino has 4 blocks
 };
 
-struct Tetromino{
+typedef struct {
     struct Block Block1;
     struct Block Block2;
     struct Block Block3;
@@ -43,7 +43,7 @@ struct Tetromino{
     // the coordinates of Block1 on the board
     int position[2];
     char color;
-};
+} Tetromino;
 // board_create: creates the board represented as char array[20][10 + 1]
 // space is empty other chars represent colors
 
@@ -69,7 +69,7 @@ char get_board_pos(int, int);
 char* get_board_line(int);
 
 // place_tetromino: places tetromino on board and spawns a new one
-void place_tetromino(struct Tetromino*);
+void place_tetromino(Tetromino*);
 
 void board_delete(void);
 
@@ -78,16 +78,16 @@ int tetaction(char, void*);
 
 // tetmove: move tetromino left for 'l', right for 'r'
 //          and down for 'd' return 1 if succesful else 0
-int tetmove(char, struct Tetromino*);
+int tetmove(char, Tetromino*);
 
 int can_block_move(struct Block*, int, int);
 
 // tetfall: let the tetromino fall down until collision detected
-void tetfall(struct Tetromino*);
+void tetfall(Tetromino*);
 
 
 // tetrotate: rotates the tetromino 90 degrees clockwise
-void tetrotate(struct Tetromino*);
+void tetrotate(Tetromino*);
 
 // pointrotate: rotates point in 90 degrees clockwise
 //              relative to origo. Used for tetromino
@@ -98,12 +98,12 @@ int* pointrotate(struct Block*);
 bool if_no_collision(char**, int, int);
 
 // tetcreate: creates a tetromino and passes the pointer to it
-struct Tetromino* tetcreate(const int coordinates[4][2], char);
+Tetromino* tetcreate(const int coordinates[4][2], char);
 
 // tetcreaterand: creates a random tetromino using the a bag.
 //                The bag consists of all the seven tetrominoes which
 //                are then dealt to the piece sequence before generating
 //                another bag.
-struct Tetromino* tetcreaterand(void);
+Tetromino* tetcreaterand();
 
 #endif // TETBASE_H_

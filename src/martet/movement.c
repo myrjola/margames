@@ -11,7 +11,7 @@ int tetaction(char input, void* tetromino){
     return 0;
 }
 
-int tetmove(char direction, struct Tetromino* tetromino){
+int tetmove(char direction, Tetromino* tetromino){
     int new_x = tetromino->position[0];
     int new_y = tetromino->position[1];
     switch (direction){
@@ -41,7 +41,7 @@ can_block_move(struct Block* block, int x, int y){
     return 0;
 }
 
-void tetfall(struct Tetromino* tetromino){
+void tetfall(Tetromino* tetromino){
     while (tetmove('d', tetromino)) // drop the tetromino until collision
         ;
     place_tetromino(tetromino);
@@ -49,7 +49,7 @@ void tetfall(struct Tetromino* tetromino){
 }
 
 // tetrotate: rotates the tetromino 90 degrees clockwise
-void tetrotate(struct Tetromino* tetromino){
+void tetrotate(Tetromino* tetromino){
     // Block1 always as pivot point
     int block2pos[2];
     int block3pos[2];

@@ -38,10 +38,10 @@ const int TETROMINO_T[4][2] = {{0, 0},
                                {0, -1}};
 
 // tetcreate: creates a tetromino and passes the pointer to it
-struct Tetromino* tetcreate(const int coordinates[4][2], char color){
+Tetromino* tetcreate(const int coordinates[4][2], char color){
     // allocate memory for tetromino
-    struct Tetromino* tetromino;
-    tetromino = (struct Tetromino*) malloc(sizeof(struct Tetromino));
+    Tetromino* tetromino;
+    tetromino = (Tetromino*) malloc(sizeof(Tetromino));
     // create the tetromino
     tetromino->Block1.x = coordinates[0][0];
     tetromino->Block2.x = coordinates[1][0];
@@ -57,11 +57,10 @@ struct Tetromino* tetcreate(const int coordinates[4][2], char color){
     tetromino->Block4.block_number = 4;
     tetromino->position[0] = 5; // width of board = 10
     tetromino->position[1] = 1; // 0 is up 20 is down
-
     // test if board free.
-    if ( !tetmove('d', tetromino) )
+    if ( tetmove('d', tetromino) == 0 ) {
         return NULL;
-    
+    }
     tetromino->color = color;
     return tetromino;
 }
@@ -91,8 +90,8 @@ int check_bag(int roll, int bag_length, int bag[]) {
     
     
 
-struct Tetromino* tetcreaterand(void){
-    struct Tetromino* tetromino;
+Tetromino* tetcreaterand(void){
+    Tetromino* tetromino;
     static int* bag = NULL;
     if (bag == NULL) {
         bag = (int*) calloc(7, sizeof(int));

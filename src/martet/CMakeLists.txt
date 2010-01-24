@@ -11,7 +11,8 @@ target_link_libraries(tetbase m)
 
 add_executable(martet main.c)
 target_link_libraries(martet ${SDL_LIBRARY} ${SDLIMAGE_LIBRARY} ${SDLTTF_LIBRARY}
-                      tetgfx tetbase keyeventinput gamefuncgfx timer miscutils simplemenu)
+                      tetgfx tetbase keyeventinput gamefuncgfx timer miscutils
+                      simplemenu score)
 
 INSTALL(TARGETS martet tetbase tetgfx
         RUNTIME DESTINATION bin

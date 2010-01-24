@@ -4,6 +4,8 @@
 #include <string.h>
 #include <stdbool.h>
 
+#include "../gamefunc/misc/score.h"
+
 #ifndef TETBASE_H_
 #define TETBASE_H_
 

@@ -32,12 +32,15 @@ void draw_block(SDL_Surface*, struct Block*, int, int, char, int);
 void pause_martet(SDL_Surface* screen, SDL_Surface* board);
 
 // menu_martet: main menu loop
-int menu_martet(SDL_Surface* screen, SDL_Surface* board, struct Menu* menu);
+int menu_martet(SDL_Surface* screen, SDL_Surface* board,
+                struct Menu* menu, int* score);
 
 // ingame_menu_martet: ingame menu loop
-int ingame_menu_martet(SDL_Surface* screen, SDL_Surface* board, struct Menu* menu);
+int ingame_menu_martet(SDL_Surface* screen, SDL_Surface* board,
+                       struct Menu* menu);
 
 // update_status_bar: updates the next tetromino image and score
-int update_status_bar(Tetromino* next_tetromino, SDL_Surface* screen, int score);
+int update_status_bar(Tetromino* next_tetromino, SDL_Surface* screen,
+                      int score);
 
 #endif // TILEGFX_H

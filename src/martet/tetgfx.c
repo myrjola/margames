@@ -16,7 +16,7 @@ SDL_Surface* get_spritesheet(bool transparent){
     return get_spritesheet(transparent);
 }
 
-void draw_tetromino(SDL_Surface* boardsurf, struct Tetromino* tetromino){
+void draw_tetromino(SDL_Surface* boardsurf,Tetromino* tetromino){
     int x;
     int y;
     x = tetromino->position[0];
@@ -28,10 +28,10 @@ void draw_tetromino(SDL_Surface* boardsurf, struct Tetromino* tetromino){
     return;
 }
 
-void draw_ghost_tetromino(SDL_Surface * boardsurf, struct Tetromino* tetromino) {
+void draw_ghost_tetromino(SDL_Surface * boardsurf, Tetromino* tetromino) {
     int x;
     int y;
-    struct Tetromino ghost = *tetromino;
+    Tetromino ghost = *tetromino;
     while (tetmove('d', &ghost)) // drop the tetromino until collision
         ;
     x = ghost.position[0];

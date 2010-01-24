@@ -1,4 +1,6 @@
 #include <stdlib.h>
+#include <stdbool.h>
+
 #include "SDL/SDL.h"
 #include "SDL/SDL_image.h"
 #include "SDL/SDL_ttf.h"
@@ -18,7 +20,18 @@ void draw_surface_centered(SDL_Surface* source, SDL_Surface* target);
 void clear_surface(SDL_Surface*, SDL_Rect*);
 
 // draw_text - simple text rendering. If surf == NULL return text_surface
-SDL_Surface* draw_text(int x, int y, SDL_Surface* surf, const char* text,
+SDL_Surface* draw_text(int x, int y, SDL_Surface* surf, char* text,
                        Uint8 r, Uint8 b, Uint8 g);
+                       
+// draw_text - simple unicode rendering. If surf == NULL return text_surface
+SDL_Surface* draw_text_unicode(int x, int y, SDL_Surface* surf, Uint16* text,
+                               Uint8 r, Uint8 b, Uint8 g);
+
+SDL_Surface* draw_text_multiline(int x, int y, SDL_Surface* surf, char* text,
+                                 Uint8 r, Uint8 b, Uint8 g);
+
+SDL_Surface* draw_text_multiline_unicode(int x, int y, SDL_Surface* surf,
+                                         Uint16* text,
+                                         Uint8 r, Uint8 b, Uint8 g);
 
 #endif // IMAGEFUNC_H

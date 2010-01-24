@@ -38,25 +38,98 @@ void clear_surface(SDL_Surface* surface, SDL_Rect* cliprect){
 
 TTF_Font* font = NULL;
 
-SDL_Surface* draw_text(int x, int y, SDL_Surface* surf, const char* text, Uint8 r, Uint8 b, Uint8 g)
-{
+SDL_Surface* draw_text_helper(int x, int y, SDL_Surface* surf, void* text,
+                              Uint8 r, Uint8 b, Uint8 g, bool unicode) {
     if (!font) {
         font = TTF_OpenFont("../data/Tuffy.ttf", 18);
-    }
-    if (!font) {
-        // handle error
-        printf("TTF_OpenFont: %s\n", TTF_GetError());
+        if (!font) {
+            // handle error
+            printf("TTF_OpenFont: %s\n", TTF_GetError());
+        }
     }
     SDL_Color color = {r, b, g};
     SDL_Surface *text_surface;
-    text_surface = TTF_RenderText_Solid(font, text, color);
-    if (surf == NULL)
+    if (unicode) {
+        text_surface = TTF_RenderUNICODE_Solid(font, (Uint16*) text, color);
+    }
+    else {
+        text_surface = TTF_RenderText_Solid(font, (char*) text, color);
+    }
+    if (surf == NULL) {
         return text_surface;
-    if (text_surface)
-        draw_surface(x, y, text_surface, surf, NULL);
-    else
-        return NULL;
+    }
+    draw_surface(x, y, text_surface, surf, NULL);
     SDL_FreeSurface(text_surface);
     return NULL;
 }
 
+SDL_Surface* draw_text(int x, int y, SDL_Surface* surf, char* text,
+                       Uint8 r, Uint8 b, Uint8 g) {
+    return draw_text_helper(x, y, surf, text, r, b, g, false);
+}
+
+SDL_Surface* draw_text_unicode(int x, int y, SDL_Surface* surf, Uint16* text,
+                               Uint8 r, Uint8 b, Uint8 g) {
+    return draw_text_helper(x, y, surf, text, r, b, g, true);
+}
+
+SDL_Surface* draw_text_multiline_helper(int x, int y, SDL_Surface* surf,
+                                        void* text, Uint8 r, Uint8 b, Uint8 g,
+                                        bool unicode) {
+    int line_y = 0;
+    // count linebreaks
+    int i = 0;
+    int count = 0;
+    if (unicode) {
+        while (((Uint16*) text)[i++]) {
+            if (((Uint16*) text)[i] == (Uint16) 0xfeff0013 ) {
+                count++;
+            }
+        }
+    }
+    else {
+        while (((char*) text)[i++]) {
+            if (((char*) text)[i] == '\n' ) {
+                count++;
+            }
+        }
+    }
+    int w = 200;
+    int h = count*25;
+    SDL_Surface* text_surface = SDL_CreateRGBSurface(SDL_SWSURFACE, w, h, 32,
+                                                     0, 0, 0, 0);
+    i = 0;
+    if (unicode) {
+        while(((Uint16*) text)[i]) {
+            draw_text_helper(x, line_y, text_surface, text, r, b, g, false);
+            line_y += 25;
+            while (((Uint16*) text)[i++] != (Uint16) 0xfeff0013)
+                ;
+        }
+    } 
+    else {
+        while(((char*) text)[i]) {
+            draw_text_helper(x, line_y, text_surface, text, r, b, g, false);
+            line_y += 25;
+            while (((char*) text)[i++] != '\n')
+                ;
+        }
+    }
+    if (surf == NULL) {
+        return text_surface;
+    }
+    draw_surface(x, y, text_surface, surf, NULL);
+    SDL_FreeSurface(text_surface);
+    return NULL;
+}
+
+SDL_Surface* draw_text_multiline(int x, int y, SDL_Surface* surf,
+                                 char* text, Uint8 r, Uint8 b, Uint8 g) {
+    return draw_text_multiline_helper(x, y, surf, (void*) text, r, b, g, false);
+}
+
+SDL_Surface* draw_text_multiline_unicode(int x, int y, SDL_Surface* surf,
+                                         Uint16* text,
+                                         Uint8 r, Uint8 b, Uint8 g) {
+    return draw_text_multiline_helper(x, y, surf, (void*) text, r, b, g, true);
+}

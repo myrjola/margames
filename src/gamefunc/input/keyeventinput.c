@@ -47,6 +47,9 @@ int input_text(Uint16* string, int bufsize) {
                     string[i - 1] = UNICODE_NULL;
                 }
             }
+            else if (event.key.keysym.sym == SDLK_ESCAPE) {
+                return KEYEVENT_NOTHING;
+            }
             // else append the unicode to the end
             else {
                 // Out of space or wrong key

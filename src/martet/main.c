@@ -8,8 +8,6 @@ const int GAME_SPEED = 800;
 int run_martet(SDL_Surface*, SDL_Surface*);
 
 int main(int argc, char** argv){
-    SDL_Surface* screen     = NULL;
-    SDL_Surface* board     = NULL;
     int i;
     int j;
     int* score = (int*) malloc(sizeof(int));
@@ -23,10 +21,9 @@ int main(int argc, char** argv){
         printf("TTF_Init: %s\n", TTF_GetError());
         return 1;
     }
-    screen = SDL_SetVideoMode(608, 640, 32, SDL_SWSURFACE);
+    SDL_Surface* screen = SDL_SetVideoMode(608, 640, 32, SDL_SWSURFACE);
     SDL_WM_SetCaption("martet", "martet");
-    board  = SDL_CreateRGBSurface(SDL_SWSURFACE, 320, 640, 32,
-                                                  0, 0, 0, 0);
+    SDL_Surface* board = create_surface(320, 640);
     SDL_Surface* border = load_image("../data/tetborder.png");
     draw_surface(321, 0, border, screen, NULL);
     draw_text(410, 35, screen, "Next tetromino:", 255, 255, 255),
@@ -52,33 +49,19 @@ int main(int argc, char** argv){
             SDL_Flip(screen);
             SDL_Delay(50);
         }
-        // HiScores!
-        Uint16* name = (Uint16*) calloc(12, sizeof(Uint16));
-        name[0] = (Uint16) 0xfeff0000; // Unicode NULL
-        while (running) {
-            clear_surface(board, NULL);
-            draw_surface(0, 0, board, screen, NULL);
-            int event = input_text(name, 12);
-            if (event == KEYEVENT_EXIT) {
-                running = false;
-            }
-            else if (event == KEYEVENT_EOL) {
-                break;
-            }
-            draw_text_unicode(10, 10, screen, name, 255, 255, 255);
-            SDL_Flip(screen);
-        }
-        struct Score* hiscores = get_hiscores();
-        add_hiscore(hiscores, *score, name);
-        save_hiscores(hiscores);
-        free(name);
+        manage_hiscores(screen, board, score);
         board_delete();
     }
+    menu_destroy(menu);
+    SDL_FreeSurface(border);
+    SDL_FreeSurface(board);
+    free(score);
+    SDL_Quit();
     return 0;
 }
 
 // run_martet: The game loop. Returns final score.
-int run_martet(SDL_Surface* screen, SDL_Surface* board){
+int run_martet(SDL_Surface* screen, SDL_Surface* board) {
     Tetromino* active_tetromino;
     Tetromino* next_tetromino;
     // create menu
@@ -97,14 +80,14 @@ int run_martet(SDL_Surface* screen, SDL_Surface* board){
     struct Timer* timer = create_timer();
     timer_change_alarm_interval(timer, GAME_SPEED);
     timer_start(timer);
-    int running = 1;
+    bool running = true;
     while (running){
         int event = process_key_events(active_tetromino, tetaction);
         if (event == KEYEVENT_EXIT)
             exit(0);
         else if (event == KEYEVENT_MENU) {
             if (ingame_menu_martet(screen, board, ingame_menu) == 1)
-                running = 0;
+                running = false;
         }
         else if (event == KEYEVENT_PAUSE)
             pause_martet(screen, board);

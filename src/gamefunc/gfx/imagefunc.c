@@ -1,5 +1,13 @@
 #include "imagefunc.h"
 
+SDL_Surface* create_surface(int w, int h){
+    SDL_Surface* surface_unoptimized = SDL_CreateRGBSurface(SDL_SWSURFACE, w, h,
+                                                            32, 0, 0, 0, 0);
+    SDL_Surface* surface = SDL_DisplayFormat(surface_unoptimized);
+    SDL_FreeSurface(surface_unoptimized);
+    return surface;
+}
+
 SDL_Surface* load_image(const char* filename){
     SDL_Surface* loadedImage    = NULL;
     SDL_Surface* optimizedImage = NULL;
@@ -48,7 +56,7 @@ SDL_Surface* draw_text_helper(int x, int y, SDL_Surface* surf, void* text,
         }
     }
     SDL_Color color = {r, b, g};
-    SDL_Surface *text_surface;
+    SDL_Surface* text_surface;
     if (unicode) {
         text_surface = TTF_RenderUNICODE_Solid(font, (Uint16*) text, color);
     }
@@ -79,40 +87,43 @@ SDL_Surface* draw_text_multiline_helper(int x, int y, SDL_Surface* surf,
     int line_y = 0;
     // count linebreaks
     int i = 0;
-    int count = 0;
+    int line_count = 1;
     if (unicode) {
-        while (((Uint16*) text)[i++]) {
+        while (((Uint16*) text)[i++] & 0x0000ffff) { // While not NULL
             if (((Uint16*) text)[i] == (Uint16) 0xfeff0013 ) {
-                count++;
+                line_count++;
             }
         }
     }
     else {
         while (((char*) text)[i++]) {
             if (((char*) text)[i] == '\n' ) {
-                count++;
+                line_count++;
             }
         }
     }
-    int w = 200;
-    int h = count*25;
-    SDL_Surface* text_surface = SDL_CreateRGBSurface(SDL_SWSURFACE, w, h, 32,
-                                                     0, 0, 0, 0);
+    int w = 300;
+    int h = line_count*25;
+    SDL_Surface* text_surface = create_surface(w, h);
     i = 0;
     if (unicode) {
-        while(((Uint16*) text)[i]) {
-            draw_text_helper(x, line_y, text_surface, text, r, b, g, false);
+        while(((Uint16*) text)[i] & 0x0000ffff) { // While not NULL
+            draw_text_helper(x, line_y, text_surface, text + i, r, b, g, false);
             line_y += 25;
-            while (((Uint16*) text)[i++] != (Uint16) 0xfeff0013)
-                ;
+            if (--line_count) { // If there's lines left jump to next line
+                while (((Uint16*) text)[i++] != (Uint16) 0xfeff0013)
+                    ;
+            }
         }
     } 
     else {
         while(((char*) text)[i]) {
-            draw_text_helper(x, line_y, text_surface, text, r, b, g, false);
+            draw_text_helper(x, line_y, text_surface, text + i, r, b, g, false);
             line_y += 25;
-            while (((char*) text)[i++] != '\n')
-                ;
+            if (--line_count) { // If there's lines left jump to next line
+                while (((char*) text)[i++] != '\n')
+                    ;
+            }
         }
     }
     if (surf == NULL) {

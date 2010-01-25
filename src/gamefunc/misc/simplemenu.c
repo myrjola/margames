@@ -11,8 +11,8 @@ struct Menu* menu_create() {
 
 void menu_destroy(struct Menu* menu) {
     int i;
-    for (i = 0; i < menu->length - 1; i++) {
-        free(menu->elements[1].text);
+    for (i = 0; i < menu->length; i++) {
+        free(menu->elements[i].text);
     }
     free(menu->elements);
     free(menu);
@@ -59,20 +59,23 @@ void draw_menu(struct Menu* menu, SDL_Surface* destination, int oldx, int oldy) 
     int y = 0;
     int w = 200;
     int h = menu->length*25;
-    SDL_Surface* menusurf = SDL_CreateRGBSurface(SDL_SWSURFACE, w, h, 32,
-                                                 0, 0, 0, 0);
-    clear_surface(menusurf, NULL);
+    SDL_Surface* menusurf = create_surface(w, h);
+    SDL_Surface* menutextsurf;
     for (i = 0; i < menu->length; i++) {
         element = &menu->elements[i];
         if (element->active) { // draw active element red
-            draw_surface(x, y, 
-                draw_text(0, 0, NULL, element->text, 255, 0, 0),
-                menusurf, NULL);
+            menutextsurf = draw_text(0, 0, NULL, element->text, 255, 0, 0);
+            draw_surface(x, y,
+                         menutextsurf,
+                         menusurf, NULL);
+            SDL_FreeSurface(menutextsurf);
         }
         else {
+            menutextsurf = draw_text(0, 0, NULL, element->text, 255, 255, 255);
             draw_surface(x, y, //draw inactive element white
-                draw_text(0, 0, NULL, element->text, 255, 255, 255),
-                menusurf, NULL);
+                         menutextsurf,
+                         menusurf, NULL);
+            SDL_FreeSurface(menutextsurf);
         }
         y += 25;
     }

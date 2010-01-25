@@ -43,4 +43,7 @@ int ingame_menu_martet(SDL_Surface* screen, SDL_Surface* board,
 int update_status_bar(Tetromino* next_tetromino, SDL_Surface* screen,
                       int score);
 
+bool manage_hiscores(SDL_Surface* screen, SDL_Surface* board, int* score);
+
+
 #endif // TILEGFX_H

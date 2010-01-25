@@ -6,6 +6,8 @@
 
 #include <SDL/SDL.h>
 
+#include "miscutils.h"
+
 #ifndef SCORE_H_
 #define SCORE_H_
 
@@ -26,5 +28,9 @@ int add_hiscore(struct Score* hiscores, int score, Uint16* name);
 // save_hiscores: Saves high scores to a file. Returns true succesful and false
 // on error
 bool save_hiscores(struct Score* hiscores);
+
+// get_scoreline: Returns the malloc'd unicode string for one line from the
+// high score table
+Uint16* get_scoreline(struct Score* score);
 
 #endif

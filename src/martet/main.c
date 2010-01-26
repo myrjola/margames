@@ -64,13 +64,13 @@ int main(int argc, char** argv){
 int run_martet(SDL_Surface* screen, SDL_Surface* board) {
     Tetromino* active_tetromino;
     Tetromino* next_tetromino;
-    // create menu
+    // Create ingame menu
     struct Menu* ingame_menu = menu_create();
     menu_addelement(ingame_menu, "Continue");
     menu_addelement(ingame_menu, "Quit Current Game");
     ingame_menu->active_element = &ingame_menu->elements[0];
     ingame_menu->active_element->active = 1;
-    int score = 1;
+    int score = 0;
     srand((unsigned) time(NULL));
     board_create();
     next_tetromino   = tetcreaterand();
@@ -92,18 +92,18 @@ int run_martet(SDL_Surface* screen, SDL_Surface* board) {
         else if (event == KEYEVENT_PAUSE)
             pause_martet(screen, board);
         if (timer_update(timer)){
-            // check if tetromino dropped to board with tetfall.
-            if ( active_tetromino->color == TETROMINO_DELETE )
-                ;
-            else if ( tetmove('d', active_tetromino) == 0 ) { // if collision
+            // If collision and tetromino not deleted
+            if ( tetmove('d', active_tetromino) == 0 &&
+                 active_tetromino->color != TETROMINO_DELETE) {
                 place_tetromino(active_tetromino);
                 active_tetromino->color = TETROMINO_DELETE;
             }
-            if ( active_tetromino->color == TETROMINO_DELETE ) {
+            else if ( active_tetromino->color == TETROMINO_DELETE ) {
+                free(active_tetromino);
                 active_tetromino = next_tetromino;
                 next_tetromino   = tetcreaterand();
             }
-            if ( next_tetromino == NULL )
+            if ( next_tetromino == NULL ) // If game over
                 break;
             check_rows(&score);
             update_status_bar(next_tetromino, screen, score);
@@ -117,6 +117,11 @@ int run_martet(SDL_Surface* screen, SDL_Surface* board) {
         draw_surface(0, 0, board, screen, NULL);
         SDL_Flip(screen);
     }
+    if (active_tetromino) {
+        free(active_tetromino);
+    }
+    free(next_tetromino);
+    free(timer);
     menu_destroy(ingame_menu);
     return score;
 }

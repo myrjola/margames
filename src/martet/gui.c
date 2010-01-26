@@ -131,7 +131,7 @@ bool manage_hiscores(SDL_Surface* screen, SDL_Surface* board, int* score) {
 //         while (*p_score_line != UNICODE_NULL) {
 //             *(p_hiscore_table++) = *(p_score_line++);
 //         }
-        free(score_line);
+//         free(score_line);
     }
     SDL_Surface* hiscore_table_surf = draw_text_multiline_unicode(0, 0, NULL,
                                                                   hiscore_table,
@@ -142,6 +142,7 @@ bool manage_hiscores(SDL_Surface* screen, SDL_Surface* board, int* score) {
     draw_surface(0, 0, board, screen, NULL);
     SDL_Flip(screen);
     SDL_Delay(2000);
+    free(hiscore_table);
     return running;
 }
 

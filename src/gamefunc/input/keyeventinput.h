@@ -19,6 +19,6 @@ int process_key_events(void*, int (*action)(char, void*));
 // to the keypresses. Checks for buffer overflow according to parameter bufsize.
 // Returns KEYEVENT_EXIT if user tries to quit and KEYEVENT_EOL when return is
 // pressed.
-int input_text(Uint16* string, int bufsize);
+int input_text(char* string, int bufsize);
 
 #endif // KEYEVENTINPUT_H

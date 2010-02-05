@@ -1,7 +1,5 @@
 #include "keyeventinput.h"
 
-const Uint16 UNICODE_NULL = (Uint16) 0xfeff0000;
-
 int process_key_events(void* object, int (*action)(char, void*)){
     SDL_Event event;
     // Poll for events
@@ -28,11 +26,11 @@ int process_key_events(void* object, int (*action)(char, void*)){
     return KEYEVENT_NOTHING;
 }
 
-int input_text(Uint16* string, int bufsize) {
+int input_text(char* string, int bufsize) {
     SDL_Event event;
     Uint16 unicode;
     int i = 0;
-    while (string[i] != UNICODE_NULL) // goto end of string
+    while (string[i] != 0) // goto end of string
         i++;
     if (SDL_PollEvent(&event)){
         if (event.type == SDL_KEYDOWN){
@@ -44,7 +42,7 @@ int input_text(Uint16* string, int bufsize) {
             // if backspace delete last character
             else if (event.key.keysym.sym == SDLK_BACKSPACE) {
                 if (i != 0) { // if string not empty
-                    string[i - 1] = UNICODE_NULL;
+                    string[i - 1] = 0;
                 }
             }
             // pressing esc garbles the string
@@ -57,8 +55,8 @@ int input_text(Uint16* string, int bufsize) {
                 if (i >= bufsize - 2 || unicode == 0) {
                     return KEYEVENT_NOTHING;
                 }
-                string[i] = unicode;
-                string[i + 1] = UNICODE_NULL;
+                string[i] = (char) unicode;
+                string[i + 1] = 0;
             }
         }
         else if (event.type == SDL_QUIT){

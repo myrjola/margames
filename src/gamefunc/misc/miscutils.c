@@ -1,7 +1,5 @@
-#include <string.h>
 #include "miscutils.h"
 
-// reverse:  reverse string s
 void reverse(char s[])
 {
     int i, j;
@@ -14,9 +12,6 @@ void reverse(char s[])
     }
 }
 
-
-
-/* itoa:  convert n to characters in s */
 void itos(int n, char* s)
 {
     int i;
@@ -32,4 +27,3 @@ void itos(int n, char* s)
     s[i] = '\0';
     reverse(s);
 }
-

@@ -80,7 +80,6 @@ int update_status_bar(Tetromino* next_tetromino, SDL_Surface* screen,
 }
 
 bool manage_hiscores(SDL_Surface* screen, SDL_Surface* board, int* score) {
-    const Uint16 UNICODE_NULL = (Uint16) 0xfeff0000;
     struct Score* hiscores = get_hiscores();
     // Check if theres a new high score.
     bool enough_points = false;
@@ -92,8 +91,8 @@ bool manage_hiscores(SDL_Surface* screen, SDL_Surface* board, int* score) {
     }
     bool running = true;
     if (enough_points) {
-        Uint16* name = (Uint16*) calloc(12, sizeof(Uint16));
-        name[0] = UNICODE_NULL;
+        char* name = (char*) calloc(12, sizeof(char));
+        name[0] = 0;
         char* grats_text = "Congratulations! New High Score!\n"
                             "What's your name?";
         SDL_Surface* grats_text_surf = draw_text_multiline(0, 0, NULL,
@@ -111,7 +110,7 @@ bool manage_hiscores(SDL_Surface* screen, SDL_Surface* board, int* score) {
             clear_surface(board, NULL);
             draw_surface_centered(grats_text_surf, board);
             draw_surface(0, 0, board, screen, NULL);
-            draw_text_unicode(100, 400, screen, name, 255, 255, 255);
+            draw_text(100, 400, screen, name, 255, 255, 255);
             SDL_Flip(screen);
         }
         SDL_FreeSurface(grats_text_surf);
@@ -120,28 +119,22 @@ bool manage_hiscores(SDL_Surface* screen, SDL_Surface* board, int* score) {
     }
     save_hiscores(hiscores);
     // Show the high score table
-    Uint16* hiscore_table = (Uint16*) calloc(SCORE_TABLE_LENGTH*32, sizeof(char));
-    Uint16* p_hiscore_table = hiscore_table;
-    Uint16* score_line;
-    Uint16* p_score_line;
+    char* hiscore_table = (char*) calloc(SCORE_TABLE_LENGTH*40, sizeof(char));
+    char* score_line;
     for (i = 0; i < SCORE_TABLE_LENGTH; i++) {
-//         score_line = get_scoreline(hiscores + i);
-//         p_score_line = score_line;
-        // Unicode strcat
-//         while (*p_score_line != UNICODE_NULL) {
-//             *(p_hiscore_table++) = *(p_score_line++);
-//         }
-//         free(score_line);
+        score_line = get_scoreline(hiscores + i, i + 1);
+        strcat(hiscore_table, score_line);
+        free(score_line);
     }
-    SDL_Surface* hiscore_table_surf = draw_text_multiline_unicode(0, 0, NULL,
-                                                                  hiscore_table,
-                                                                  255, 255, 255);
+    SDL_Surface* hiscore_table_surf = draw_text_multiline(0, 0, NULL,
+                                                          hiscore_table,
+                                                          255, 255, 255);
     clear_surface(board, NULL);
     draw_surface_centered(hiscore_table_surf, board);
     SDL_FreeSurface(hiscore_table_surf);
     draw_surface(0, 0, board, screen, NULL);
     SDL_Flip(screen);
-    SDL_Delay(2000);
+    SDL_Delay(5000);
     free(hiscore_table);
     return running;
 }

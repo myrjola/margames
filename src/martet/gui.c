@@ -5,6 +5,7 @@ void pause_martet(SDL_Surface* screen, SDL_Surface* board) {
     draw_surface(0, 0, board, screen, NULL);
     draw_text(74, 315, screen, "PAUSED, 'p' to continue", 255, 255, 255);
     SDL_Flip(screen);
+    // Stub method for process_key_events.
     int pause_action(char c, void* whatever) {
         return KEYEVENT_NOTHING;
     }
@@ -132,9 +133,23 @@ bool manage_hiscores(SDL_Surface* screen, SDL_Surface* board, int* score) {
     clear_surface(board, NULL);
     draw_surface_centered(hiscore_table_surf, board);
     SDL_FreeSurface(hiscore_table_surf);
+    draw_text(10, 600, board, "Press any key to continue", 255, 255, 255);
     draw_surface(0, 0, board, screen, NULL);
     SDL_Flip(screen);
-    SDL_Delay(5000);
+    // Stub method for process_key_events.
+    int hiscore_action(char c, void* whatever) {
+        return KEYEVENT_ANY_OTHER_KEY;
+    }
+    while (true) {
+        int event = process_key_events(NULL, hiscore_action);
+        if (event == KEYEVENT_EXIT) {
+            running = false;
+            break;
+        }
+        else if (event != KEYEVENT_NOTHING) {
+            break;
+        }
+    }
     free(hiscore_table);
     return running;
 }

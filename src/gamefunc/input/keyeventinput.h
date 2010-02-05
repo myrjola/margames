@@ -5,7 +5,7 @@
 
 enum {KEYEVENT_NOTHING, KEYEVENT_EXIT,
       KEYEVENT_PAUSE, KEYEVENT_MENU,
-      KEYEVENT_EOL};
+      KEYEVENT_EOL, KEYEVENT_ANY_OTHER_KEY};
 
 // process_key_events: Input using SDL_KEY_UP
 // and SDL_KEY_DOWN in case of event a pointer

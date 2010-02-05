@@ -14,7 +14,7 @@ int process_key_events(void* object, int (*action)(char, void*)){
                 case SDLK_RETURN: return (*action)('\n', object);break;
                 case SDLK_p:      return KEYEVENT_PAUSE;break;
                 case SDLK_ESCAPE: return KEYEVENT_MENU;break;
-                default: break;
+                default: KEYEVENT_ANY_OTHER_KEY;
             }
         }
         // if tried to exit

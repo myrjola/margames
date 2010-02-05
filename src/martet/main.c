@@ -3,7 +3,7 @@
 #include "tetbase.h"
 #include "tetgfx.h"
 
-const int GAME_SPEED = 800;
+const int GAME_SPEED = 600;
 
 int run_martet(SDL_Surface*, SDL_Surface*);
 
@@ -26,7 +26,7 @@ int main(int argc, char** argv){
     SDL_Surface* board = create_surface(320, 640);
     SDL_Surface* border = load_image("../data/tetborder.png");
     draw_surface(321, 0, border, screen, NULL);
-    draw_text(410, 35, screen, "Next tetromino:", 255, 255, 255);
+    draw_text(390, 35, screen, "Next tetromino:", 255, 255, 255);
     draw_text(330, 200, screen, "Score: ", 255, 255, 255);
     // create menu
     struct Menu* menu = menu_create();

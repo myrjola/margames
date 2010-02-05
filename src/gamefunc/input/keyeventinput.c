@@ -27,40 +27,52 @@ int process_key_events(void* object, int (*action)(char, void*)){
 }
 
 int input_text(char* string, int bufsize) {
+    static iconv_t unicode_to_utf8 = NULL;
+    if (unicode_to_utf8 == NULL) {
+        unicode_to_utf8 = iconv_open("UTF-8", "UTF-16");
+    }
     SDL_Event event;
     Uint16 unicode;
     int i = 0;
-    while (string[i] != 0) // goto end of string
+    while (string[i] != 0) // Goto end of string.
         i++;
     if (SDL_PollEvent(&event)){
         if (event.type == SDL_KEYDOWN){
             unicode = event.key.keysym.unicode;
-            // enter should end input
+            // enter should end input.
             if (event.key.keysym.sym == SDLK_RETURN) {
                 return KEYEVENT_EOL;
             }
-            // if backspace delete last character
+            // If backspace delete last character.
             else if (event.key.keysym.sym == SDLK_BACKSPACE) {
-                if (i != 0) { // if string not empty
-                    string[i - 1] = 0;
+                if (i != 0) { // If string not empty.
+                    if (string[i - 1] < 0) { // If multi-byte.
+                        string[i - 2] = '\0';
+                    }
+                    else {
+                        string[i - 1] = '\0';
+                    }
                 }
             }
-            // pressing esc garbles the string
+            // Pressing esc garbles the string.
             else if (event.key.keysym.sym == SDLK_ESCAPE) {
                 return KEYEVENT_NOTHING;
             }
-            // else append the unicode to the end
+            // Else append the unicode to the end.
             else {
-                // Out of space or wrong key
+                // Out of space or wrong key.
                 if (i >= bufsize - 2 || unicode == 0) {
                     return KEYEVENT_NOTHING;
                 }
+                if (unicode > 127) {
+                    string[i++] = '\303';
+                }
                 string[i] = (char) unicode;
-                string[i + 1] = 0;
+                string[i + 1] = '\0';
             }
         }
         else if (event.type == SDL_QUIT){
-            // Quit
+            // Quit.
             return KEYEVENT_EXIT;
         }
     }

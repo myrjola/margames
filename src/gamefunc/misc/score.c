@@ -70,6 +70,6 @@ char* get_scoreline(struct Score* score, int placement) {
     itos(score->points, points);
     strcat(score_string, " ");
     strcat(score_string, points);
-    strcat(score_string, " points.\n    \n");
+    strcat(score_string, " points.\n\n");
     return score_string;
 }

@@ -49,7 +49,7 @@ TTF_Font* font = NULL;
 SDL_Surface* draw_text(int x, int y, SDL_Surface* surf, char* text,
                               Uint8 r, Uint8 b, Uint8 g) {
     if (!font) {
-        font = TTF_OpenFont("../data/Tuffy.ttf", 18);
+        font = TTF_OpenFont("../data/retro.ttf", 11);
         if (!font) {
             // handle error
             printf("TTF_OpenFont: %s\n", TTF_GetError());
@@ -68,6 +68,9 @@ SDL_Surface* draw_text(int x, int y, SDL_Surface* surf, char* text,
 
 SDL_Surface* draw_text_multiline(int x, int y, SDL_Surface* surf,
                                  char* text, Uint8 r, Uint8 b, Uint8 g) {
+    char text_to_draw[40];
+    int start_pos;
+    int end_pos;
     int line_y = 0;
     // count linebreaks
     int i = 0;
@@ -82,12 +85,16 @@ SDL_Surface* draw_text_multiline(int x, int y, SDL_Surface* surf,
     SDL_Surface* text_surface = create_surface(w, h);
     i = 0;
     while(text[i]) {
-        draw_text(x, line_y, text_surface, text + i, r, b, g);
-        line_y += 25;
-        if (--line_count) { // If there's lines of text left: jump to next line.
+        start_pos = i;
+        end_pos = 0;
+        if (--line_count) { // Find next linebreak.
             while (text[i++] != '\n' && text[i])
-                ;
+                end_pos++;
         }
+        text_to_draw[0] = '\0';
+        strncat(text_to_draw, text + start_pos, end_pos);
+        draw_text(x, line_y, text_surface, text_to_draw, r, b, g);
+        line_y += 25;
     }
     if (surf == NULL) {
         return text_surface;

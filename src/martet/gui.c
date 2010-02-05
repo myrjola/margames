@@ -94,8 +94,9 @@ bool manage_hiscores(SDL_Surface* screen, SDL_Surface* board, int* score) {
     if (enough_points) {
         char* name = (char*) calloc(12, sizeof(char));
         name[0] = 0;
-        char* grats_text = "Congratulations! New High Score!\n"
-                            "What's your name?";
+        char* grats_text = "Congratulations!\n"
+                            "New High Score!\n"
+                            "What's your name?\n";
         SDL_Surface* grats_text_surf = draw_text_multiline(0, 0, NULL,
                                                            grats_text,
                                                            255, 255, 255);

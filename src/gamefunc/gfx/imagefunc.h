@@ -28,15 +28,7 @@ void clear_surface(SDL_Surface*, SDL_Rect*);
 SDL_Surface* draw_text(int x, int y, SDL_Surface* surf, char* text,
                        Uint8 r, Uint8 b, Uint8 g);
                        
-// draw_text - simple unicode rendering. If surf == NULL return text_surface
-SDL_Surface* draw_text_unicode(int x, int y, SDL_Surface* surf, Uint16* text,
-                               Uint8 r, Uint8 b, Uint8 g);
-
 SDL_Surface* draw_text_multiline(int x, int y, SDL_Surface* surf, char* text,
                                  Uint8 r, Uint8 b, Uint8 g);
-
-SDL_Surface* draw_text_multiline_unicode(int x, int y, SDL_Surface* surf,
-                                         Uint16* text,
-                                         Uint8 r, Uint8 b, Uint8 g);
 
 #endif // IMAGEFUNC_H

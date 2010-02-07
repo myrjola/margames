@@ -29,14 +29,14 @@ int check_rows(int* score){
     int rows_full = 0;
     for (i = BOARD_HEIGHT - 1; i > 0; --i){
         if (row_full(board[i])){
-            rows_full = 1;
-            delete_row(i);
-            *score += 1;
+            rows_full += 1;
+            delete_row(i++);
         }
     }
-    if (rows_full)
-        check_rows(score);
-    return 1;
+    *score += rows_full;
+//     if (rows_full)
+//         check_rows(score);
+    return rows_full;
 }
 
 bool row_full(char* row){

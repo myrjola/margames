@@ -22,14 +22,15 @@ int tetmove(char direction, Tetromino* tetromino){
         default: break;
     }
     // if all blocks can move, move tetromino
-    if ( can_block_move(&tetromino->Block1, new_x, new_y))
-        if ( can_block_move(&tetromino->Block2, new_x, new_y))
-            if ( can_block_move(&tetromino->Block3, new_x, new_y))
-                if ( can_block_move(&tetromino->Block4, new_x, new_y)){
-                    tetromino->position[0] = new_x;
-                    tetromino->position[1] = new_y;
-                    return 1;
-                }
+    if (can_block_move(&tetromino->Block1, new_x, new_y) &&
+        can_block_move(&tetromino->Block2, new_x, new_y) &&
+        can_block_move(&tetromino->Block3, new_x, new_y) &&
+        can_block_move(&tetromino->Block4, new_x, new_y)){
+        
+        tetromino->position[0] = new_x;
+        tetromino->position[1] = new_y;
+        return 1;
+    }
     return 0;
 }
 
@@ -64,19 +65,19 @@ void tetrotate(Tetromino* tetromino){
     block4pos[0] = block4relpos[0] + tetromino->position[0];
     block4pos[1] = block4relpos[1] + tetromino->position[1];
     // rotate tetromino if enough room.
-    if ( get_board_pos(block2pos[0], block2pos[1]) == ' ')
-        if ( get_board_pos(block3pos[0], block3pos[1]) == ' ')
-            if ( get_board_pos(block4pos[0], block4pos[1]) == ' '){
-                tetromino->Block2.x = block2relpos[0];
-                tetromino->Block2.y = block2relpos[1];
-                free(block2relpos);
-                tetromino->Block3.x = block3relpos[0];
-                tetromino->Block3.y = block3relpos[1];
-                free(block3relpos);
-                tetromino->Block4.x = block4relpos[0];
-                tetromino->Block4.y = block4relpos[1];
-                free(block4relpos);
-            }
+    if ((get_board_pos(block2pos[0], block2pos[1]) == ' ') &&
+        (get_board_pos(block3pos[0], block3pos[1]) == ' ') &&
+        (get_board_pos(block4pos[0], block4pos[1]) == ' ')){
+        tetromino->Block2.x = block2relpos[0];
+        tetromino->Block2.y = block2relpos[1];
+        free(block2relpos);
+        tetromino->Block3.x = block3relpos[0];
+        tetromino->Block3.y = block3relpos[1];
+        free(block3relpos);
+        tetromino->Block4.x = block4relpos[0];
+        tetromino->Block4.y = block4relpos[1];
+        free(block4relpos);
+    }
      return;
 }
 

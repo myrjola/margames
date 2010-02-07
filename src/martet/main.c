@@ -91,10 +91,10 @@ int run_martet(SDL_Surface* screen, SDL_Surface* board) {
         }
         else if (event == KEYEVENT_PAUSE)
             pause_martet(screen, board);
-        if (timer_update(timer)){
+        if (timer_update(timer)) {
             // If collision and tetromino not deleted
-            if ( tetmove('d', active_tetromino) == 0 &&
-                 active_tetromino->color != TETROMINO_DELETE) {
+            if ( tetmove('d', active_tetromino) == 0
+                && active_tetromino->color != TETROMINO_DELETE) {
                 place_tetromino(active_tetromino);
                 active_tetromino->color = TETROMINO_DELETE;
             }
@@ -102,13 +102,15 @@ int run_martet(SDL_Surface* screen, SDL_Surface* board) {
                 free(active_tetromino);
                 active_tetromino = next_tetromino;
                 next_tetromino   = tetcreaterand();
+                if (check_rows(&score)) { // If score has increased.
+                    timer_change_alarm_interval(timer,
+                                                GAME_SPEED /
+                                                sqrt( (double) score/5) + 1);
+                }
             }
             if ( next_tetromino == NULL ) // If game over
                 break;
-            check_rows(&score);
             update_status_bar(next_tetromino, screen, score);
-            // speed changes every 10 points
-            timer_change_alarm_interval(timer, GAME_SPEED / (score/10+1) );
         }
         clear_surface(board, NULL);
         draw_board(board);

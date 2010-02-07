@@ -2,10 +2,10 @@
 
 int process_key_events(void* object, int (*action)(char, void*)){
     SDL_Event event;
-    // Poll for events
+    // Poll for events.
     if (SDL_PollEvent(&event)){
         if (event.type == SDL_KEYDOWN){
-            // call the action function
+            // Call the action function.
             switch(event.key.keysym.sym){
                 case SDLK_UP:     return (*action)('u', object);break;
                 case SDLK_DOWN:   return (*action)('d', object);break;
@@ -17,9 +17,9 @@ int process_key_events(void* object, int (*action)(char, void*)){
                 default: KEYEVENT_ANY_OTHER_KEY;
             }
         }
-        // if tried to exit
+        // If tried to exit.
         else if (event.type == SDL_QUIT){
-            // Quit
+            // Quit.
             return KEYEVENT_EXIT;
         }
     }
@@ -27,10 +27,6 @@ int process_key_events(void* object, int (*action)(char, void*)){
 }
 
 int input_text(char* string, int bufsize) {
-    static iconv_t unicode_to_utf8 = NULL;
-    if (unicode_to_utf8 == NULL) {
-        unicode_to_utf8 = iconv_open("UTF-8", "UTF-16");
-    }
     SDL_Event event;
     Uint16 unicode;
     int i = 0;
@@ -39,7 +35,7 @@ int input_text(char* string, int bufsize) {
     if (SDL_PollEvent(&event)){
         if (event.type == SDL_KEYDOWN){
             unicode = event.key.keysym.unicode;
-            // enter should end input.
+            // Enter should end input.
             if (event.key.keysym.sym == SDLK_RETURN) {
                 return KEYEVENT_EOL;
             }
